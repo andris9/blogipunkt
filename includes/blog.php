@@ -11,7 +11,7 @@ class Blog{
         return self::getByParam("url", urltrim($url));
     }
     
-    public static function save($blog){
+    public static function save(&$blog){
         
         if(!$blog["url"]){
         	throw new Exception('No blog url set');
@@ -37,11 +37,12 @@ class Blog{
         
         if(mysql_error()){
         	throw new Exception('Error while saving');
+            return false;
         }else{
         	if(!$blog["id"]){
         		$blog["id"] = mysql_insert_id();
         	}
-            return $blog;
+            return true;
         }
     }
     
@@ -49,6 +50,102 @@ class Blog{
         $blog = self::deserialize();
         $blog["meta"]["inserted"] = date("Y-m-d H:i:s");
         return $blog;
+    }
+    
+    public static function update_from_feed(&$feed, &$blog){
+        $data = self::get_data_from_feed($feed);
+        $changed = false;
+        
+        if($data["hub"] != $blog["hub"]){
+            
+            if($blog["hub"]){
+                self::unsubscribe($blog["hub"], $blog["feed"]);
+            }
+            $blog["hub"] = $data["hub"];
+            if($blog["hub"]){
+                self::subscribe($blog["hub"], $blog["feed"]);
+            }
+            $changed = true;
+        }
+        
+        // skip
+        
+        if($blog["url"] != $data["url"]){
+            $blog["url"] = $data["url"];
+            $changed = true;
+        }
+        
+        if($blog["title"] != $data["title"]){
+            $blog["title"] = $data["title"];
+            $changed = true;
+        }
+        
+        if($blog["meta"]["description"] != $data["description"]){
+            $blog["meta"]["description"] = $data["description"];
+            $changed = true;
+        }
+        
+        if($changed){
+            Blog::save($blog);
+        }
+    }
+    
+    public static function checkFeed($id){
+
+        $blog = Blog::getById($id);
+        if(!$blog || !$blog["feed"]){
+            return false;
+        }
+    
+        $feed = new SimplePie();
+        $feed->set_feed_url($blog["feed"]);
+        $feed->set_useragent(BOT_USERAGENT);
+    
+        $feed->enable_cache(false);
+        $feed->set_image_handler(false);
+    
+        $feed->init();
+    
+        Blog::update_from_feed($feed, $blog);
+    
+        $item = false;
+    
+        // handle posts
+        
+        $feed->__destruct(); // Do what PHP should be doing on it's own.
+        unset($item);
+        unset($feed);
+        unset($blog);
+        return true;
+    }
+    
+    private static function subscribe($hub, $feed){
+        include_once(dirname(__FILE__)."/subscriber.php");
+        if($hub){
+            $subscriber = new Subscriber($hub, PUBSUB_CALLBACK_URL);
+            $subscriber->subscribe($feed);
+        }
+    }
+
+    private static function unsubscribe($hub, $feed){
+        include_once(dirname(__FILE__)."/subscriber.php");
+        if($hub){
+            $subscriber = new Subscriber($hub, PUBSUB_CALLBACK_URL);
+            $subscriber->unsubscribe($feed);
+            return true;
+        }else
+            return false;
+    }
+    
+    private static function get_data_from_feed(&$feed){
+        $data = array();
+        $data["title"] = text_decode($feed->get_title());
+        $data["description"] = text_decode($feed->get_description());
+        $data["url"] = urltrim($feed->get_permalink());
+    
+        $hubs = $feed->get_links("hub");
+        $data["hub"] = $hubs && count($hubs)?urldecode($hubs[0]):false;
+        return $data;
     }
     
     private static function getByParam($param, $value){
