@@ -17,10 +17,17 @@ class Post{
     	if(!$blog){
             echo "ei saanud aru :/\n";
         }else{
-            foreach ($feed->get_items() as $item){
-                self::save($item, $blog);
+            // get newest 5 items
+            $count = 0;
+            $max = ($feed->get_item_quantity()>5?5:$feed->get_item_quantity())-1;
+            for($i=$max; $i>=0;$i--){
+                $item = $feed->get_item($i);
+                if(self::save($item, $blog))$count++;
             }
-            echo "alles OK!\n";
+            if($count)
+                echo "Added $count posts\n";
+            else
+                echo "Nothing new :/\n";
         }
         
         Blog::update_from_feed($feed, $blog);

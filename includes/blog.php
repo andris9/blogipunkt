@@ -22,7 +22,7 @@ class Blog{
         $blog["feed"] = detectFeed($html, $blog["url"]);
         
         if(self::save($blog)){
-        	self::checkFeed($blog["id"]);
+        	self::handleFeed($blog);
         };
 
         return $blog["id"];
@@ -35,9 +35,9 @@ class Blog{
         }
         
         if(!$blog["id"]){
-            $sql = "INSERT INTO blogs (url, feed, hub, title, meta, updated, queued) VALUES('%s','%s','%s','%s','%s',NOW(),'%s')";	
+            $sql = "INSERT INTO blogs (url, feed, hub, title, meta, updated, checked, queued) VALUES('%s','%s','%s','%s','%s','%s',NOW(),'%s')";	
         }else{
-            $sql = "UPDATE blogs SET url='%s', feed='%s', hub='%s', title='%s', meta='%s', updated=NOW(), queued='%s' WHERE id='{$blog["id"]}'";	
+            $sql = "UPDATE blogs SET url='%s', feed='%s', hub='%s', title='%s', meta='%s', updated=NOW(), checked='%s', queued='%s' WHERE id='{$blog["id"]}'";	
         }
         
         mysql_query(sprintf($sql, 
@@ -46,6 +46,7 @@ class Blog{
                 mysql_real_escape_string($blog["hub"]),
                 mysql_real_escape_string($blog["title"]),
                 mysql_real_escape_string($blog["meta"]?serialize($blog["meta"]):""),
+                mysql_real_escape_string($blog["checked"]),
                 mysql_real_escape_string($blog["queued"]?"Y":"N")
             ));
         
@@ -103,7 +104,7 @@ class Blog{
         }
         
         $blog["checked"] = date("Y-m-d H:i:s");
-        $blog["queued"] = "N";
+        $blog["queued"] = false;
         $changed = true;
         
         if($changed){
@@ -112,12 +113,15 @@ class Blog{
     }
     
     public static function checkFeed($id){
-
         $blog = Blog::getById($id);
+        return self::handleFeed($blog);
+    }
+    
+    public static function handleFeed(&$blog){
         if(!$blog || !$blog["feed"]){
             return false;
         }
-    
+        
         $feed = new SimplePie();
         $feed->set_feed_url($blog["feed"]);
         $feed->set_useragent(BOT_USERAGENT);
@@ -133,7 +137,8 @@ class Blog{
         $feed->__destruct(); // Do what PHP should be doing on it's own.
         unset($feed);
         unset($blog);
-        return true;
+        
+        return true;        
     }
     
     public static function subscribe($hub, $feed){
@@ -175,7 +180,7 @@ class Blog{
             return false;
     }
     
-	private static function deserialize($data=array()){
+	public static function deserialize($data=array()){
 		
 		$blog = array(
             "id"     => $data["id"]?intval($data["id"]):false,
