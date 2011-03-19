@@ -11,6 +11,23 @@ class Blog{
         return self::getByParam("url", urltrim($url));
     }
     
+    public static function add($url){
+        $blog = self::getByURL($url);
+        if($blog){
+        	return $blog["id"];
+        }
+        $blog = self::blank();
+        $blog["url"] = urltrim(resolve_url($url));
+        $html = load_from_url($blog["url"]);
+        $blog["feed"] = detectFeed($html, $blog["url"]);
+        
+        if(self::save($blog)){
+        	self::checkFeed($blog["id"]);
+        };
+
+        return $blog["id"];
+    }
+    
     public static function save(&$blog){
         
         if(!$blog["url"]){
@@ -85,6 +102,10 @@ class Blog{
             $changed = true;
         }
         
+        $blog["checked"] = date("Y-m-d H:i:s");
+        $blog["queued"] = "N";
+        $changed = true;
+        
         if($changed){
             Blog::save($blog);
         }
@@ -106,20 +127,16 @@ class Blog{
     
         $feed->init();
     
-        Blog::update_from_feed($feed, $blog);
-    
-        $item = false;
-    
-        // handle posts
+        // lisa postitused
+        Post::handlePosts($feed, $blog);
         
         $feed->__destruct(); // Do what PHP should be doing on it's own.
-        unset($item);
         unset($feed);
         unset($blog);
         return true;
     }
     
-    private static function subscribe($hub, $feed){
+    public static function subscribe($hub, $feed){
         include_once(dirname(__FILE__)."/subscriber.php");
         if($hub){
             $subscriber = new Subscriber($hub, PUBSUB_CALLBACK_URL);
@@ -127,7 +144,7 @@ class Blog{
         }
     }
 
-    private static function unsubscribe($hub, $feed){
+    public static function unsubscribe($hub, $feed){
         include_once(dirname(__FILE__)."/subscriber.php");
         if($hub){
             $subscriber = new Subscriber($hub, PUBSUB_CALLBACK_URL);

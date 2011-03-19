@@ -8,6 +8,25 @@ class Post{
         return ($row = mysql_fetch_array($result))?true:false;
     }
     
+    public static function handlePosts(&$feed, $blog = false){
+        
+        if(!$blog){
+        	$blog = Blog::getByUrl(resolve_url($feed->get_permalink()));
+        }
+        
+    	if(!$blog){
+            echo "ei saanud aru :/\n";
+        }else{
+            foreach ($feed->get_items() as $item){
+                self::save($item, $blog);
+            }
+            echo "alles OK!\n";
+        }
+        
+        Blog::update_from_feed($feed, $blog);
+        
+    }
+    
     public static function save(&$item, &$blog){
     	
         $url = resolve_url($item->get_permalink());
@@ -29,7 +48,7 @@ class Post{
             }
         }
         
-        $time = intval($item->get_browser("U"));
+        $time = intval($item->get_date("U"));
         if($time>time())
             $time = time();
         if($time<100)
@@ -38,7 +57,7 @@ class Post{
         $post = array(
             "blog" => $blog["id"],
             "title" => text_decode($item->get_title()),
-            "date" => $time,
+            "date" => date("Y-m-d H:i:s", $time),
             "author" => $author,
             "tags" => serialize($tags),
             "contents" => text_decode($item->get_content()),
@@ -53,7 +72,6 @@ class Post{
         }
         
         $sql = "INSERT INTO posts (".join(", ",$sqlnames).") VALUES(".join(", ",$sqlvalues).")";
-        file_put_contents("log.txt",$sql);
         mysql_query($sql);
         if(mysql_error()){
         	return false;

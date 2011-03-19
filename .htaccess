@@ -6,4 +6,5 @@ RewriteRule ^(.*/)?\.git/ - [F,L]
 ErrorDocument 403 "Access Forbidden"
 
 RewriteRule ^robot/(.*) bot/run.php?action=$1&%{QUERY_STRING} [NC]
+RewriteRule ^pubsub/lease  bot/lease.php?%{QUERY_STRING} [NC]
 RewriteRule ^pubsub  bot/receive.php?%{QUERY_STRING} [NC]
