@@ -1,0 +1,8 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^(.*/)?\.git/ - [F,L]
+ErrorDocument 403 "Access Forbidden"
+
+RewriteRule ^robot/(.*) cron/run.php?action=$1&%{QUERY_STRING} [NC]
