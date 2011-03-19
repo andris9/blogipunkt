@@ -2,7 +2,7 @@
 
 //Andmebaasi konstandid
 define ("MYSQL_SERVER_NAME", "localhost"); 
-define ("MYSQL_SERVER_USER", ""); 
+define ("MYSQL_SERVER_USER", "test"); 
 define ("MYSQL_SERVER_PASS", ""); 
 define ("MYSQL_SERVER_BASE", ""); 
 
