@@ -22,8 +22,9 @@ header("content-type: text/plain");
 if($_SERVER["REQUEST_METHOD"]=="POST"){ // Uute postituste lisamine
     
     $data = file_get_contents("php://input");
+    file_put_contents("log.txt", $data);
     
-    if(PubSub::post($data)){
+    if(PubSub::handlePOST($data)){
     	echo "feed checked";
     }else{
     	echo "feed error";
@@ -31,6 +32,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){ // Uute postituste lisamine
         
 }elseif($_SERVER["REQUEST_METHOD"]=="GET"){ // subscribe/unsubscribe kinnitused
     
-	PubSub::get($_GET);
+	PubSub::handleGET($_GET);
     
 }

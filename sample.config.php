@@ -17,7 +17,7 @@ mb_regex_encoding("UTF-8");
 setlocale(LC_ALL,'et_EE.UTF-8');
 
 // user agent string for the bot
-define("BOT_USERAGENT","MyBot");
+define("BOT_USERAGENT","MyBlogBot/1.0 (+{$_SERVER["HTTP_HOST"]})");
 define("PUBSUB_VERIFY_TOKEN","secret_token");
 define("PUBSUB_CALLBACK_URL","http://".$_SERVER["HTTP_HOST"]."/pubsub");
 
