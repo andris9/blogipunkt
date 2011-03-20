@@ -193,7 +193,7 @@ class Blog{
             return false;
         }
         
-        include_once(dirname(__FILE__)."/vendor/simplepie/simplepie.php");
+        include_once(dirname(__FILE__)."/vendor/simplepie/simplepie.inc");
         $feed = new SimplePie();
         $feed->set_feed_url($blog["feed"]);
         $feed->set_useragent(BOT_USERAGENT);
