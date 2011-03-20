@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * harvester.php
+ * http://example.com/robot/harvester
+ * 
+ * Laeb andmebaasist kuni 100 blogi, millel on märgitud 'queued=Y' ning 
+ * uuendab nende sisu.
+ * 
+ * CRON võimalikult tihti
+ */
+
 require_once("../config.php");
 require_once("../includes/tools.php");
 require_once("../includes/blog.php");
 require_once("../includes/post.php");
-require_once("../includes/simplepie.inc");
 
 header("content-type: text/plain");
 

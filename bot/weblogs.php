@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * weblogs.php
+ * http://example.com/robot/weblogs
+ * 
+ * Laeb Weblogs.com ja Google Blogs viimase 5 minuti uuenduste andmed ning otsib
+ * neist andmebaasis levaid blogisid. Juhul kui leitakse vaste, märgitakse blogi
+ * juures 'queued=Y'
+ * 
+ * CRON kord 5 minuti jooksul
+ */
+
 require_once("../config.php");
 require_once("../includes/tools.php");
 
@@ -19,11 +30,13 @@ check_weblogs_updates($blogs, $updated, "http://blogsearch.google.com/changes.xm
 
 $updated = array_unique($updated);
 
+// märgi leitud blogid uuendatamise järjekorda
 for($i=0; $i<count($updated); $i++){
 	$sql = "UPDATE blogs SET queued='Y' WHERE id='%s'";
     mysql_query(sprintf($sql, mysql_real_escape_string($updated[$i])));
 }
 
+// väljund
 if(count($updated)){
 	echo "Queued ".count($updated)." blogs";
 }else{

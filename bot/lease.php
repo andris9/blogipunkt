@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * lease.php
+ * http://example.com/pubsub/lease
+ * 
+ * Laeb andmebaasist kuni 100 blogi, mille PubSubHubbub "liisinguaeg" hakkab täis
+ * saama ning uuendab seda
+ * 
+ * CRON kord tunnis
+ */
+
 include("../config.php");
 include("../includes/subscriber.php");
 include("../includes/blog.php");
