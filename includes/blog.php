@@ -81,7 +81,7 @@ class Blog{
      * juba baasis olemas, tekib exception! Õnnestumise korral tagastab true, muidu false
      **/
     public static function save(&$blog){
-        
+
         if(!$blog["url"]){
         	throw new Exception('No blog url set');
         }
@@ -142,11 +142,12 @@ class Blog{
         }
         
         // skip
-        
-        if($blog["url"] != $data["url"]){
+        /*
+        if($data["url"] && $blog["url"] != $data["url"]){
             $blog["url"] = $data["url"];
             $changed = true;
         }
+        */
         
         if($blog["title"] != $data["title"]){
             $blog["title"] = $data["title"];
@@ -195,13 +196,21 @@ class Blog{
         
         include_once(dirname(__FILE__)."/vendor/simplepie/simplepie.inc");
         $feed = new SimplePie();
+        
         $feed->set_feed_url($blog["feed"]);
         $feed->set_useragent(BOT_USERAGENT);
     
+        $feed->force_feed(true);
         $feed->enable_cache(false);
         $feed->set_image_handler(false);
     
         $feed->init();
+        
+        if($feed->error()){
+            $feed->__destruct(); // Do what PHP should be doing on it's own.
+            unset($feed);
+        	return false;
+        }
     
         // lisa postitused
         Post::handlePosts($feed, $blog);

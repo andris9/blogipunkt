@@ -22,6 +22,7 @@ class PubSub{
         $feed->set_raw_data($postBody);
         $feed->set_useragent(BOT_USERAGENT);
     
+        $feed->force_feed(true);
         $feed->enable_cache(false);
         $feed->set_image_handler(false);
     
