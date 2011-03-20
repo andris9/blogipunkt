@@ -1,9 +1,12 @@
+# Blogipass
+
+**Blogipass** on projekt blogikataloogi loomiseks. Hetkel on olemas vaid back-end (blogide lisamise API, postituste korjamine jne)
 
 ## Install
 
 Muuda faili *sample.config.php* nime *config.php* vastu ja uuenda selle sisu
 
-Lisa andmebaasitabelid (hetkel veel puudu, kuna pole lõülikud)
+Lisa andmebaasitabelid failist *blogipass.sql*
 
 ### Cron
 
