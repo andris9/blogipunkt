@@ -1,7 +1,7 @@
 <?php
 
 function text_decode($str){
-	return trim(html_entity_decode($str, ENT_QUOTES, 'UTF-8'));
+    return trim(html_entity_decode($str, ENT_QUOTES, 'UTF-8'));
 }
 
 function urltrim($url){
@@ -9,9 +9,9 @@ function urltrim($url){
     
     // replace feed: with http:
     if(substr(strtolower($url),0,5)=="feed:"){
-    	$url = "http:".substr($url, 5);
+        $url = "http:".substr($url, 5);
         if(substr(strtolower($url),0,10)=="http:http:"){
-        	$url = substr($url,5);
+            $url = substr($url,5);
         }elseif(substr(strtolower($url),0,12)=="http://http:"){
             $url = substr($url,7);
         }elseif(substr(strtolower($url),0,11)=="http:https:"){
@@ -21,14 +21,14 @@ function urltrim($url){
         }
     }
     
-	$urlparts = parse_url($url);
+    $urlparts = parse_url($url);
     parse_str($urlparts["query"], $oldQuery);
     $newQuery = array();
     
     if($oldQuery)foreach($oldQuery as $key=>$value){
-    	if(!in_array($key, $GLOBALS["IGNORE_QUERY_PARAMS"])){
-    		$newQuery[$key] = $value;
-    	}
+        if(!in_array($key, $GLOBALS["IGNORE_QUERY_PARAMS"])){
+            $newQuery[$key] = $value;
+        }
     }
     
     $pathparts = split("/", $urlparts["path"]);
@@ -45,10 +45,10 @@ function urltrim($url){
 function resolve_url($url){
     
     $sourceurl = urltrim($url);
-	$sql = "SELECT dest FROM urls WHERE source=MD5('%s')";
+    $sql = "SELECT dest FROM urls WHERE source=MD5('%s')";
     $result = mysql_query(sprintf($sql, mysql_real_escape_string($sourceurl)));
     if($row = mysql_fetch_array($result)){
-    	return $row["dest"];
+        return $row["dest"];
     }
     
     return urlexists($url);
@@ -56,7 +56,7 @@ function resolve_url($url){
 }
 
 function urlexists($url){
-	$ch = curl_init();
+    $ch = curl_init();
     $options = array(CURLOPT_URL        => $url,
                 CURLOPT_USERAGENT       => BOT_USERAGENT,
                 CURLOPT_FOLLOWLOCATION  => true,
@@ -116,7 +116,7 @@ function load_from_url($url){
 
 
 function build_url($urlparts){
-	$newparts = array();
+    $newparts = array();
     if($urlparts["scheme"])$newparts[] = $urlparts["scheme"]."://";
     if($urlparts["user"]){
         $newparts[] = $urlparts["user"];
@@ -137,7 +137,7 @@ function baseUrl($url, $base){
     
     // already full url
     if(substr(strtolower($url),0,7)=="http://" || substr(strtolower($url),0,8)=="https://"){
-    	return $url;
+        return $url;
     }
     
     if(!$url){
@@ -146,7 +146,7 @@ function baseUrl($url, $base){
     
     if(substr($url,0,1)=="/"){
         list($baseparts["path"], $baseparts["query"]) = explode("?",$url,2);
-    	return build_url($baseparts);
+        return build_url($baseparts);
     }
     
     $baseparts["pathtree"] = array_values(array_filter(split("/",$baseparts["path"])));
@@ -165,7 +165,7 @@ function baseUrl($url, $base){
     $build = $baseparts["pathtree"];
     
     for($i=0;$i<count($urlparts);$i++){
-    	if(!$urlparts[$i] || $urlparts[$i]==".")continue;
+        if(!$urlparts[$i] || $urlparts[$i]==".")continue;
         if($urlparts[$i]==".."){
             array_pop($build);
             continue;

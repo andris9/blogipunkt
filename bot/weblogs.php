@@ -32,15 +32,15 @@ $updated = array_unique($updated);
 
 // märgi leitud blogid uuendatamise järjekorda
 for($i=0; $i<count($updated); $i++){
-	$sql = "UPDATE blogs SET queued='Y' WHERE id='%s'";
+    $sql = "UPDATE blogs SET queued='Y' WHERE id='%s'";
     mysql_query(sprintf($sql, mysql_real_escape_string($updated[$i])));
 }
 
 // väljund
 if(count($updated)){
-	echo "Queued ".count($updated)." blogs";
+    echo "Queued ".count($updated)." blogs";
 }else{
-	echo "Nothig to queue :/";
+    echo "Nothig to queue :/";
 }
 
 function check_weblogs_updates(&$blogs, &$updated, $url){

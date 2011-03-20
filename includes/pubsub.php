@@ -6,7 +6,7 @@
  * Klass tegeleb PubSubHubbub GET ja POST päringute majandamisega
  **/
 class PubSub{
-	
+    
     /**
      * handlePOST($postBody [,$blog]) -> Boolean
      * - $postBody (String): RSS fail, mille saatis PubSubHubbub server
@@ -17,7 +17,7 @@ class PubSub{
      * postitused baasi. Kui ei tuvastata blogi, siis tagastab false, muidu true
      **/
     public static function handlePOST($postBody, &$blog=false){
-    	include_once(dirname(__FILE__)."/vendor/simplepie/simplepie.inc");
+        include_once(dirname(__FILE__)."/vendor/simplepie/simplepie.inc");
         $feed = new SimplePie();
         $feed->set_raw_data($postBody);
         $feed->set_useragent(BOT_USERAGENT);

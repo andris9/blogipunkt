@@ -25,13 +25,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){ // Uute postituste lisamine
     file_put_contents("log.txt", $data);
     
     if(PubSub::handlePOST($data)){
-    	echo "feed checked";
+        echo "feed checked";
     }else{
-    	echo "feed error";
+        echo "feed error";
     }
         
 }elseif($_SERVER["REQUEST_METHOD"]=="GET"){ // subscribe/unsubscribe kinnitused
     
-	PubSub::handleGET($_GET);
+    PubSub::handleGET($_GET);
     
 }

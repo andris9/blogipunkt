@@ -7,4 +7,4 @@ require_once("includes/post.php");
 
 Header("content-type: text/plain; charset=utf-8");
 
-echo "111";
+echo "nothing to show yet";

@@ -22,9 +22,9 @@ $result = mysql_query($sql);
 while($row = mysql_fetch_array($result)){
     echo "updating {$row["title"]}\n";
     flush();
-	if($blog = Blog::deserialize($row)){
-		Blog::handleFeed($blog);
-	};
+    if($blog = Blog::deserialize($row)){
+        Blog::handleFeed($blog);
+    };
 }
 
 echo "okidoki";

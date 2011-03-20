@@ -6,7 +6,7 @@
  * Klass, mis tegeleb blogide majandamisega (lisamine/laadimine jne).
  **/
 class Blog{
-	
+    
     
     /**
      * Blog.blank() -> Object
@@ -26,9 +26,9 @@ class Blog{
      * Laeb andmebaasist blogi andmed struktureeritud ID väärtuse alusel
      * blogiobjekti kujul. Kui ei leitud, siis tagastab false
      **/
-	public static function getById($id){
-		return self::getByParam("id", $id);
-	}
+    public static function getById($id){
+        return self::getByParam("id", $id);
+    }
     
     /**
      * Blog.getByURL($url) -> Object
@@ -55,7 +55,7 @@ class Blog{
         // Check if already exists
         $blog = self::getByURL($url);
         if($blog){
-        	return $blog;
+            return $blog;
         }
         
         $blog = self::blank();
@@ -64,10 +64,10 @@ class Blog{
         $blog["feed"] = detectFeed($html, $blog["url"]);
         
         if(self::save($blog)){
-        	self::handleFeed($blog);
+            self::handleFeed($blog);
             return $blog;
         }else{
-        	return false;
+            return false;
         }
         
     }
@@ -83,13 +83,13 @@ class Blog{
     public static function save(&$blog){
 
         if(!$blog["url"]){
-        	throw new Exception('No blog url set');
+            throw new Exception('No blog url set');
         }
         
         if(!$blog["id"]){
-            $sql = "INSERT INTO blogs (url, feed, hub, title, meta, updated, checked, queued) VALUES('%s','%s','%s','%s','%s','%s',NOW(),'%s')";	
+            $sql = "INSERT INTO blogs (url, feed, hub, title, meta, updated, checked, queued) VALUES('%s','%s','%s','%s','%s','%s',NOW(),'%s')";    
         }else{
-            $sql = "UPDATE blogs SET url='%s', feed='%s', hub='%s', title='%s', meta='%s', updated=NOW(), checked='%s', queued='%s' WHERE id='{$blog["id"]}'";	
+            $sql = "UPDATE blogs SET url='%s', feed='%s', hub='%s', title='%s', meta='%s', updated=NOW(), checked='%s', queued='%s' WHERE id='{$blog["id"]}'";    
         }
         
         mysql_query(sprintf($sql, 
@@ -106,12 +106,12 @@ class Blog{
         // võibolla peaks üle kirjutama hoopis
         
         if(mysql_error()){
-        	throw new Exception('Error while saving');
+            throw new Exception('Error while saving');
             return false;
         }else{
-        	if(!$blog["id"]){
-        		$blog["id"] = mysql_insert_id();
-        	}
+            if(!$blog["id"]){
+                $blog["id"] = mysql_insert_id();
+            }
             return true;
         }
     }
@@ -209,7 +209,7 @@ class Blog{
         if($feed->error()){
             $feed->__destruct(); // Do what PHP should be doing on it's own.
             unset($feed);
-        	return false;
+            return false;
         }
     
         // lisa postitused
@@ -297,21 +297,21 @@ class Blog{
      * 
      * Koostab struktureeritud blogi andmete objekti.
      **/
-	public static function deserialize($data=array()){
-		
-		$blog = array(
+    public static function deserialize($data=array()){
+        
+        $blog = array(
             "id"     => $data["id"]?intval($data["id"]):false,
-			"url"    => $data["url"],
-			"feed"   => $data["feed"]?$data["feed"]:false,
-			"hub"    => $data["hub"]?$data["hub"]:false,
-			"updated"=> $data["updated"],
-			"title"  => $data["title"],
-			"meta"   => $data["meta"]?unserialize($data["meta"]):array(),
-			"checked"=> $data["checked"]!="0000-00-00 00:00:00"?$data["checked"]:false,
+            "url"    => $data["url"],
+            "feed"   => $data["feed"]?$data["feed"]:false,
+            "hub"    => $data["hub"]?$data["hub"]:false,
+            "updated"=> $data["updated"],
+            "title"  => $data["title"],
+            "meta"   => $data["meta"]?unserialize($data["meta"]):array(),
+            "checked"=> $data["checked"]!="0000-00-00 00:00:00"?$data["checked"]:false,
             "queued"  => $data["queued"]=="Y"?true:false
-		);
-		
+        );
+        
         return $blog;
-	}
-	
+    }
+
 }
