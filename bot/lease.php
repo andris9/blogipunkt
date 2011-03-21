@@ -1,12 +1,13 @@
 <?php
+set_time_limit(220);
 
 /*
  * lease.php
  * http://example.com/pubsub/lease
- * 
+ *
  * Laeb andmebaasist kuni 100 blogi, mille PubSubHubbub "liisinguaeg" hakkab täis
  * saama ning uuendab seda
- * 
+ *
  * CRON kord tunnis
  */
 

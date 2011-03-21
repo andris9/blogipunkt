@@ -1,12 +1,13 @@
 <?php
+set_time_limit(220);
 
 /*
  * harvester.php
  * http://example.com/robot/harvester
- * 
- * Laeb andmebaasist kuni 100 blogi, millel on märgitud 'queued=Y' ning 
+ *
+ * Laeb andmebaasist kuni 100 blogi, millel on märgitud 'queued=Y' ning
  * uuendab nende sisu.
- * 
+ *
  * CRON võimalikult tihti
  */
 

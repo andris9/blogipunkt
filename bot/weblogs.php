@@ -1,13 +1,14 @@
 <?php
+set_time_limit(220);
 
 /*
  * weblogs.php
  * http://example.com/robot/weblogs
- * 
+ *
  * Laeb Weblogs.com ja Google Blogs viimase 5 minuti uuenduste andmed ning otsib
  * neist andmebaasis levaid blogisid. Juhul kui leitakse vaste, märgitakse blogi
  * juures 'queued=Y'
- * 
+ *
  * CRON kord 5 minuti jooksul
  */
 

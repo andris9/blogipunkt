@@ -42,7 +42,7 @@ class Blog{
     }
 
     /**
-     * Blog.add($url [,$feed]) -> Object
+     * Blog.add($url [,$feed][,$title][,$description]) -> Object
      * - $url (String): Blogi veebiaadress
      * - $feed (String): Blogi RSS aadress
      * - $title (String): Blogi vaikimisi pealkiri

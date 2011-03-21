@@ -65,7 +65,8 @@ function urlexists($url){
                 CURLOPT_RETURNTRANSFER  => true,
                 CURLOPT_NOBODY          => true,
                 CURLOPT_SSL_VERIFYPEER  => false,
-                CURLOPT_HEADER          => false
+                CURLOPT_HEADER          => false,
+                CURLOPT_CONNECTTIMEOUT  => 10
                 );
 
     curl_setopt_array($ch, $options);
@@ -101,7 +102,8 @@ function load_from_url($url){
                 CURLOPT_NOBODY          => false,
                 CURLOPT_RETURNTRANSFER  => true,
                 CURLOPT_SSL_VERIFYPEER  => false,
-                CURLOPT_HEADER          => false
+                CURLOPT_HEADER          => false,
+                CURLOPT_CONNECTTIMEOUT  => 10
                 );
     curl_setopt_array($ch, $options);
     $content = curl_exec($ch);

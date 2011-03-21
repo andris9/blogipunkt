@@ -21,9 +21,12 @@ switch($_GET["action"]){
     case "add":
         AjaxBlog::add($_REQUEST);
         break;
+    case "queue":
+        AjaxBlog::queue($_REQUEST);
+        break;
 }
 
-Header("Content-type: application/json");
+Header("Content-type: application/json; Charset=utf-8");
 echo json_encode(AjaxBlog::$response);
 
 
@@ -125,6 +128,12 @@ class AjaxBlog{
         	self::$response["message"] = "Invalid URL";
             return;
         }
+
+        if($blog = Blog::getByURL($url)){
+            self::$response["message"]="Already exists";
+            return;
+        }
+
         if($feed){
         	$feed = urltrim(resolve_url($feed));
         }
@@ -143,6 +152,24 @@ class AjaxBlog{
         	self::$response["message"]="Failed to save";
         }
 
+    }
+
+    /**
+     * AjaxBlog.queue($request) -> undefined
+     * - $request (Object): Päringuobjekt GET ja POST muutujatega
+     *
+     * Märgib valitud blog ($_REQUEST["id"]) ülevaatamise järjekorda
+     **/
+    public static function queue($request){
+        if($blog = Blog::getById($request["id"])){
+            $blog["queued"] = true;
+            Blog::save($blog);
+
+            self::$response["status"] = "OK";
+            unset(self::$response["message"]);
+        }else{
+        	self::$response["message"] = "Unknown blog ID";
+        }
     }
 }
 
