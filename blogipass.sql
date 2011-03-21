@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Masin: digituvastus.org
--- Tegemisaeg: 20.03.2011 kell 23:27:20
+-- Tegemisaeg: 21.03.2011 kell 14:53:35
 -- Serveri versioon: 5.1.45
 -- PHP versioon: 5.2.10
 
@@ -54,10 +54,13 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `tags` varchar(255) COLLATE utf8_estonian_ci NOT NULL,
   `contents` text COLLATE utf8_estonian_ci NOT NULL,
   `url` varchar(255) COLLATE utf8_estonian_ci NOT NULL,
+  `votes` int(11) NOT NULL,
+  `points` double NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`),
   KEY `blog` (`blog`),
-  KEY `date` (`date`)
+  KEY `date` (`date`),
+  KEY `points` (`points`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci COMMENT='Postitused';
 
 -- --------------------------------------------------------
