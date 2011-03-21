@@ -5,8 +5,33 @@ RewriteBase /
 RewriteRule ^(.*/)?\.git/ - [F,L]
 ErrorDocument 403 "Access Forbidden"
 
+# bot
+# ================
+
+# www.example.com/robot/harvester
 RewriteRule ^robot/harvester bot/harvester.php?%{QUERY_STRING} [NC]
+
+# www.example.com/robot/weblogs
 RewriteRule ^robot/weblogs bot/weblogs.php?%{QUERY_STRING} [NC]
+
+# pubsub
+# ================
+
+# www.example.com/pubsub/lease
 RewriteRule ^pubsub/lease  bot/lease.php?%{QUERY_STRING} [NC]
+
+# www.example.com/pubsub
 RewriteRule ^pubsub  bot/receive.php?%{QUERY_STRING} [NC]
+
+# ajax
+# ================
+
+# www.example.com/ajax/{file}/{action}
 RewriteRule ^ajax/([\w]+)/(.*)  ajax/$1.php?action=$2&%{QUERY_STRING} [NC]
+
+# main
+# ================
+
+# www.example.com/node/{page}
+# www.example.com/node/{page}/{action}
+RewriteRule ^node/([\w]+)(/([\w]+))? index.php?page=$1&action=$3&%{QUERY_STRING} [NC]
