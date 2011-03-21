@@ -22,6 +22,7 @@ function urltrim($url){
     }
     
     $urlparts = parse_url($url);
+    $oldQuery = false;
     parse_str($urlparts["query"], $oldQuery);
     $newQuery = array();
     

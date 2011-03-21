@@ -86,6 +86,11 @@ class Blog{
             throw new Exception('No blog url set');
         }
         
+        include_once(dirname(__FILE__)."/event.php");
+        Event::fire("blog:presave", array(
+            "blog" => &$blog
+        ));
+        
         if(!$blog["id"]){
             $sql = "INSERT INTO blogs (url, feed, hub, title, meta, updated, checked, queued) VALUES('%s','%s','%s','%s','%s','%s',NOW(),'%s')";    
         }else{
@@ -128,9 +133,10 @@ class Blog{
     public static function update_from_feed(&$feed, &$blog){
         $data = self::get_data_from_feed($feed);
         $changed = false;
+        $oldvalues = array();
         
         if($data["hub"] != $blog["hub"]){
-            
+            $oldvalues["hub"] = $blog["hub"];
             if($blog["hub"]){
                 self::unsubscribe($blog["hub"], $blog["feed"]);
             }
@@ -144,19 +150,30 @@ class Blog{
         // skip
         /*
         if($data["url"] && $blog["url"] != $data["url"]){
+            $oldvalues["url"] = $blog["url"];
             $blog["url"] = $data["url"];
             $changed = true;
         }
         */
         
         if($blog["title"] != $data["title"]){
+            $oldvalues["title"] = $blog["title"];
             $blog["title"] = $data["title"];
             $changed = true;
         }
         
         if($blog["meta"]["description"] != $data["description"]){
+            $oldvalues["description"] = $blog["description"];
             $blog["meta"]["description"] = $data["description"];
             $changed = true;
+        }
+        
+        if($changed){
+        	include_once(dirname(__FILE__)."/event.php");
+            Event::fire("blog:changed", array(
+                "blog" => &$blog,
+                "oldvalues" => $oldvalues
+            ));
         }
         
         // kuna kutsutakse alati välja postituste kontrollis, siis tuleb

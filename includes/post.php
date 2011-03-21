@@ -91,6 +91,13 @@ class Post{
             "url" => $url
         );
         
+        include_once(dirname(__FILE__)."/event.php");
+        Event::fire("post:presave", array(
+            "post" => &$post,
+            "blog" => &$blog,
+            "item" => &$item
+        ));
+        
         // Koosta SQL päring
         $sqlnames = array();
         $sqlvalues = array();

@@ -20,7 +20,6 @@ class PubSub{
         include_once(dirname(__FILE__)."/vendor/simplepie/simplepie.inc");
         $feed = new SimplePie();
         $feed->set_raw_data($postBody);
-        $feed->set_useragent(BOT_USERAGENT);
     
         $feed->force_feed(true);
         $feed->enable_cache(false);
@@ -64,6 +63,10 @@ class PubSub{
                 $sql = "UPDATE blogs SET `lease`='%s' WHERE feed='%s'";
                 mysql_query(sprintf($sql, mysql_real_escape_string($lease_time),
                                         mysql_real_escape_string($topic)));
+            }
+            
+            if($mode=="test"){
+                echo $topic;
             }
         }
 
