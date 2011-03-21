@@ -92,11 +92,12 @@ class Post{
         );
         
         include_once(dirname(__FILE__)."/event.php");
-        Event::fire("post:presave", array(
+        $ref = array(
             "post" => &$post,
             "blog" => &$blog,
             "item" => &$item
-        ));
+        );
+        Event::fire("post:presave", $ref);
         
         // Koosta SQL päring
         $sqlnames = array();

@@ -87,9 +87,10 @@ class Blog{
         }
         
         include_once(dirname(__FILE__)."/event.php");
-        Event::fire("blog:presave", array(
+        $ref = array(
             "blog" => &$blog
-        ));
+        );
+        Event::fire("blog:presave", $ref);
         
         if(!$blog["id"]){
             $sql = "INSERT INTO blogs (url, feed, hub, title, meta, updated, checked, queued) VALUES('%s','%s','%s','%s','%s','%s',NOW(),'%s')";    
@@ -170,10 +171,11 @@ class Blog{
         
         if($changed){
         	include_once(dirname(__FILE__)."/event.php");
-            Event::fire("blog:changed", array(
+            $ref = array(
                 "blog" => &$blog,
                 "oldvalues" => $oldvalues
-            ));
+            );
+            Event::fire("blog:changed", $ref);
         }
         
         // kuna kutsutakse alati välja postituste kontrollis, siis tuleb
