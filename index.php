@@ -6,5 +6,30 @@ require_once("includes/blog.php");
 require_once("includes/post.php");
 
 
+$page = false;
 
-echo template_render("views/main.php", array("body"=>print_r($_REQUEST,1)));
+if(!isset($_GET["page"])){
+    // esileht
+    $page = "front";
+}else{
+    // ruuter
+    switch($_GET["page"]){
+        case "addBlog":
+            $page = "add_blog";
+            break;
+    }
+}
+
+if(!$page){
+    // näita 404 veateadet
+	Header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+    echo template_render("views/main.php", array(
+        "title" => "Ei leitud",
+        "body"=> template_render("views/error.php",array(
+            "message"=>"404 Otsitud lehte ei leitud!"
+        ))
+    ));
+}else{
+    // näita soovitud lehte
+	echo template_render("views/".$page.".php");
+}
