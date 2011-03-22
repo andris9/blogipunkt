@@ -7,6 +7,10 @@ function text_decode($str){
 function urltrim($url){
     $url = trim($url);
 
+    if(!$url || preg_match("/^https?:\/\/$/",$url)){
+    	return false;
+    }
+
     // replace feed: with http:
     if(substr(strtolower($url),0,5)=="feed:"){
         $url = "http:".substr($url, 5);
@@ -53,7 +57,6 @@ function resolve_url($url){
     }
 
     return urlexists($url);
-
 }
 
 function urlexists($url){
@@ -76,6 +79,8 @@ function urlexists($url){
     $header  = curl_getinfo($ch);
     $status  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
+
+    //print_r(array($content, $err, $errmsg, $header, $status));
 
     // miskipärast suunab curl mitteeksisteerivad .com aadressid
     // domeenile com.org, mille staatus on 200

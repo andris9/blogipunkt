@@ -31,5 +31,8 @@ if(!$page){
     ));
 }else{
     // näita soovitud lehte
-	echo template_render("views/".$page.".php");
+    echo template_render("views/main.php", array(
+        "title" => "$page",
+        "body"=> template_render("views/".$page.".php")
+    ));
 }

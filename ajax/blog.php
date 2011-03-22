@@ -44,7 +44,7 @@ class AjaxBlog{
      **/
     public static $response = array(
         "status"=>"error",
-        "message"=>"Invalid request"
+        "message"=>"Vigane päring"
     );
 
     /**
@@ -59,18 +59,20 @@ class AjaxBlog{
         $url = urltrim(resolve_url($request["url"]));
         if(!$url){
         	self::$response["status"] = "error";
-            self::$response["message"] = "Invalid URL";
+            self::$response["message"] = "Vigane blogi URL, kontrolli aadressi kehtivust";
             return;
         }
 
         // vaikimisi pealkirjaks on url ilma protokollita
         list($scheme, $title) = explode("//",$url,2);
         $description = "";
+        $categories = array();
 
         // kontrolli kas on juba olemas
         if($blog = Blog::getByURL($url)){
         	$title = $blog["title"];
-            $description = $blog["description"];
+            $description = $blog["meta"]["description"];
+            $categories = $blog["meta"]["categories"]?$blog["meta"]["categories"]:array();
             $feed_url = $blog["feed"];
         }else{
             $html = load_from_url($url);
@@ -106,6 +108,7 @@ class AjaxBlog{
             "feed" => $feed_url,
             "title" => htmlspecialchars($title),
             "description" => htmlspecialchars($description),
+            "categories" => $categories,
             "exists"=> !!$blog
         );
     }
@@ -120,17 +123,40 @@ class AjaxBlog{
         $url = $request["url"];
         $feed = $request["feed"];
         $title = trim($request["title"]);
-        $description = trim($request["description"]);
+        $description = false; //trim($request["description"]);
+        $lang = trim($request["lang"]);
 
         // kontrolli kas kehtib
         $url = urltrim(resolve_url($url));
         if(!$url){
-        	self::$response["message"] = "Invalid URL";
+        	self::$response["message"] = "Vigane blogi URL, kontrolli aadressi kehtivust";
             return;
         }
 
+        $categories = $request["categories"]?$request["categories"]:false;
+
         if($blog = Blog::getByURL($url)){
-            self::$response["message"]="Already exists";
+            self::$response["status"]="exists";
+            self::$response["message"]="Juba olemas";
+
+            $blog["url"] = $url;
+            $blog["feed"] = $feed;
+            $blog["title"] = $title;
+            $blog["meta"]["categories"] = $categories;
+
+            self::$response["data"] = array(
+                "id" => $blog["id"],
+                "url" => $url,
+                "feed" => $feed,
+                "title" => htmlspecialchars($title),
+                "description" => htmlspecialchars($blog["meta"]["description"]),
+                "categories" => $categories,
+                "exists"=> true
+            );
+            // TODO: save changes
+
+            Blog::queueSave($blog);
+
             return;
         }
 
@@ -144,12 +170,20 @@ class AjaxBlog{
             $feed = detectFeed($html, $url);
         }
 
-        if($blog = Blog::add($url, $feed, $title, $description)){
+        if($blog = Blog::add($url, $feed, $lang, $title, $description, $categories)){
             unset(self::$response["message"]);
             self::$response["status"] = "OK";
-            self::$response["data"] = $blog;
+            self::$response["data"] = array(
+                "id" => $blog["id"],
+                "url" => $url,
+                "feed" => $feed,
+                "title" => htmlspecialchars($title),
+                "description" => htmlspecialchars($blog["meta"]["description"]),
+                "categories" => $categories,
+                "exists"=> true
+            );
         }else{
-        	self::$response["message"]="Failed to save";
+        	self::$response["message"]="Salvestamine ebaõnnestus";
         }
 
     }
@@ -168,7 +202,7 @@ class AjaxBlog{
             self::$response["status"] = "OK";
             unset(self::$response["message"]);
         }else{
-        	self::$response["message"] = "Unknown blog ID";
+        	self::$response["message"] = "Blogi ei leitud";
         }
     }
 }

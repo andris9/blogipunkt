@@ -1,5 +1,108 @@
 
 
 body{
-    font-family: Helvetica, Sans-serif; 
+    font-family: Helvetica, Sans-serif;
+    font-size: 14px; 
+}
+
+
+input.wait{
+    background-image: url(/static/wait-small.gif);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+div.wait{
+    background-image: url(/static/wait-small.gif);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+input.textinput{
+    border: 1px solid #C3D9FF;
+    padding: 5px;
+}
+
+input.wide{
+    width: 300px;
+}
+
+
+.title{
+    font-size: 13px;
+}
+
+.bold{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.description{
+    font-style: italic;
+    font-size: 13px;
+}
+
+.url a{
+    color: blue;
+    text-decoration: none;
+}
+
+.warning{
+    font-size: 12px;
+    padding: 10px 20px;
+    background: #FFFF88;
+}
+
+.notice{
+    border-top: 1px solid #F9F7ED; 
+    padding-top: 5px;
+    margin-top: 5px;
+    font-size: 12px;
+    font-style: italic;
+}
+
+
+tr.btop td{
+    border-top: 1px solid #F9F7ED; 
+}
+
+tr.bbottom td{
+    border-bottom: 1px solid #F9F7ED; 
+}
+
+.edit_blog{
+    width: 650px;
+}
+
+.edit_blog table{
+    width: 100%;
+}
+
+.edit_blog table td{
+    padding:5px 3px;
+}
+
+ul.category-list{
+    list-style-type: none;
+    padding:0;
+    margin:0;
+}
+
+ul.category-list li{
+    display: inline;
+    margin:0;
+    padding:0;
+}
+
+ul.category-list li label, div.category-list div{
+    display: block;
+    float: left;
+    width: 160px;
+    margin: 0 2px 2px 0;
+    background: #F9F7ED;
+    font-size: 13px;
+    padding: 3px 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }

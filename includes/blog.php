@@ -47,13 +47,14 @@ class Blog{
      * - $feed (String): Blogi RSS aadress
      * - $title (String): Blogi vaikimisi pealkiri
      * - $description (String): Blogi vaikimisi kirjeldus
+     * - $categories (Array): Kategooria ID'de massiiv
      *
      * Funktsioon üritab blogi aadressi alusel tuvastada blogiga seotud
      * detailid nagu RSS jne ning kui suudab kõik leida, siis lisab andmed
      * uue blogina baasi. Juhul kui ei õnnestu, tuleks kasutada Blog::save()
      * meetodit. Tagastusväärtuseks on loodud/leitud blogi objekt või false
      **/
-    public static function add($url, $feed = false, $title = false, $description = false){
+    public static function add($url, $feed = false, $lang = "et_ee", $title = false, $description = false, $categories = false){
 
         // Check if already exists
         $blog = self::getByURL($url);
@@ -69,6 +70,28 @@ class Blog{
 
         if($description)
             $blog["meta"] = $description;
+
+        if($lang)
+            $blog["lang"] = $lang;
+
+        // manage categories
+        if($categories){
+            $remove_categories = array();
+            if($blog["meta"]["categories"]){
+            	foreach($blog["meta"]["categories"] as $category){
+            		if(!in_array($category, $categories)){
+            			$remove_categories[] = $category;
+            		}
+            	}
+            }
+            if(count($remove_categories)){
+            	$blog["remove_categories"] = $remove_categories;
+            }
+            $blog["meta"]["categories"] = $categories;
+            if(count($blog["meta"]["categories"])>BLOG_MAX_CATEGORIES){
+            	$blog["meta"]["categories"] = array_splice($blog["meta"]["categories"],0,BLOG_MAX_CATEGORIES);
+            }
+        }
 
         if(!$feed){
         	$html = load_from_url($blog["url"]);
@@ -107,9 +130,9 @@ class Blog{
         Event::fire("blog:presave", $ref);
 
         if(!$blog["id"]){
-            $sql = "INSERT INTO blogs (url, feed, hub, title, meta, updated, checked, queued) VALUES('%s','%s','%s','%s','%s','%s',NOW(),'%s')";
+            $sql = "INSERT INTO blogs (url, feed, hub, title, meta, lang, updated, checked, queued) VALUES('%s','%s','%s','%s','%s','%s',NOW(),'%s','%s')";
         }else{
-            $sql = "UPDATE blogs SET url='%s', feed='%s', hub='%s', title='%s', meta='%s', updated=NOW(), checked='%s', queued='%s' WHERE id='{$blog["id"]}'";
+            $sql = "UPDATE blogs SET url='%s', feed='%s', hub='%s', title='%s', meta='%s', lang='%s', updated=NOW(), checked='%s', queued='%s' WHERE id='{$blog["id"]}'";
         }
 
         mysql_query(sprintf($sql,
@@ -118,6 +141,7 @@ class Blog{
                 mysql_real_escape_string($blog["hub"]),
                 mysql_real_escape_string($blog["title"]),
                 mysql_real_escape_string($blog["meta"]?serialize($blog["meta"]):""),
+                mysql_real_escape_string($blog["lang"]),
                 mysql_real_escape_string($blog["checked"]),
                 mysql_real_escape_string($blog["queued"]?"Y":"N")
             ));
@@ -132,8 +156,37 @@ class Blog{
             if(!$blog["id"]){
                 $blog["id"] = mysql_insert_id();
             }
-            return true;
         }
+
+        if($blog["meta"]["categories"]){
+        	foreach($blog["meta"]["categories"] as $category){
+        		$sql = "INSERT INTO cat2blog (category, blog) VALUES('%s', '%s')";
+                mysql_query(sprintf($sql,
+                    mysql_real_escape_string($category),
+                    mysql_real_escape_string($blog["id"])
+                ));
+                if(!mysql_error() && mysql_affected_rows()){
+                	$sql = "UPDATE categories SET `count` = `count`+1 WHERE id='%s'";
+                    mysql_query(sprintf($sql, mysql_real_escape_string($category)));
+                }
+        	}
+        }
+
+        if($blog["remove_categories"]){
+            foreach($blog["remove_categories"] as $category){
+                $sql = "DELETE FROM cat2blog WHERE category='%s' AND blog='%s'";
+                mysql_query(sprintf($sql,
+                    mysql_real_escape_string($category),
+                    mysql_real_escape_string($blog["id"])
+                ));
+                if(!mysql_error() && mysql_affected_rows()){
+                    $sql = "UPDATE categories SET `count` = `count`-1 WHERE id='%s'";
+                    mysql_query(sprintf($sql, mysql_real_escape_string($category)));
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -340,11 +393,46 @@ class Blog{
             "updated"=> $data["updated"],
             "title"  => $data["title"],
             "meta"   => $data["meta"]?unserialize($data["meta"]):array(),
+            "lang"   => $data["lang"]?$data["lang"]:"et_ee",
             "checked"=> $data["checked"]!="0000-00-00 00:00:00"?$data["checked"]:false,
-            "queued"  => $data["queued"]=="Y"?true:false
+            "queued" => $data["queued"]=="Y"?true:false
         );
 
         return $blog;
+    }
+
+    public static function queueSave($blog){
+
+        $data = serialize($blog);
+        $hash = md5($data);
+
+        $sql = "INSERT INTO queue (ip, data, hash) VALUES('%s','%s','%s')";
+        mysql_query(sprintf($sql,
+            mysql_real_escape_string($_SERVER["REMOTE_ADDR"]),
+            mysql_real_escape_string($data),
+            mysql_real_escape_string($hash)
+        ));
+
+    }
+
+    private static $categories = false;
+
+    public static function getCategories(){
+        if(self::$categories){
+        	return self::$categories;
+        }
+
+        $categories = array();
+        $sql = "SELECT * FROM categories ORDER BY name LIMIT 100";
+        $result = mysql_query($sql);
+        while($row = mysql_fetch_array($result)){
+        	$categories[intval($row["id"])] = array(
+                "name"=>$row["name"],
+                "count" => intval($row["count"])
+            );
+        }
+        self::$categories = $categories;
+        return $categories;
     }
 
 }
