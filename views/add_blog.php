@@ -181,6 +181,6 @@
 
 
 <script>
-AddForm.MAX_CATEGORIES: <?php echo BLOG_MAX_CATEGORIES; ?>;
-AddForm.categories: <?php echo json_encode(Blog::getCategories());?>;
+AddForm.MAX_CATEGORIES = <?php echo BLOG_MAX_CATEGORIES; ?>;
+AddForm.categories = <?php echo json_encode(Blog::getCategories());?>;
 </script>

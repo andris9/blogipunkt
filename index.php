@@ -5,17 +5,19 @@ require_once("includes/tools.php");
 require_once("includes/blog.php");
 require_once("includes/post.php");
 
-
+$title = "Plogipang";
 $page = false;
 $js = array();
 
 if(!isset($_GET["page"])){
     // esileht
+    $title = "Plogipang &raquo; Esileht";
     $page = "front";
 }else{
     // ruuter
     switch($_GET["page"]){
         case "addBlog":
+            $title = "Plogipang &raquo; Lisa uus blogi";
             $page = "add_blog";
             $js[] = "/static/addblog.js";
             break;
@@ -34,7 +36,7 @@ if(!$page){
 }else{
     // näita soovitud lehte
     echo template_render("views/main.php", array(
-        "title" => "$page",
+        "title" => "$title",
         "js" => $js,
         "body"=> template_render("views/".$page.".php")
     ));
