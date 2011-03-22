@@ -216,7 +216,7 @@ var AddForm = {
 
         // categories
         this.domCache.step2.category_checkboxes.each((function(cb){
-            if(this.data.step2.categories.indexOf(Number(cb.value))<0){
+            if(this.data.step2.categories.indexOf(String(cb.value))<0){
                 cb.checked = false;
             }else{
                 cb.checked = true;
