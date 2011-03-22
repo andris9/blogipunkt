@@ -2,9 +2,69 @@
 
 body{
     font-family: Helvetica, Sans-serif;
-    font-size: 14px; 
+    font-size: 14px;
+    color: #111;
+    background: #F9F7ED;
+    margin:0;
+    padding:0;
 }
 
+
+h1{
+    font-size: 24px;
+    font-weight: normal;
+}
+
+h2{
+    font-size: 20px;
+    font-weight: normal;
+}
+
+#container{
+    width: 800px;
+    margin: 0px auto;
+    padding: 20px 20px 50px 20px;
+    border-left: 2px solid #EEE;
+    border-right: 2px solid #EEE;
+    background: white;
+}
+
+#header{
+    background: #407ACA;
+    color: white;
+    line-height: normal;
+    padding: 10px 14px 10px 14px;
+    border: 1px solid #719EE9;
+ 
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+ 
+    font-weight: bold;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.68);
+    letter-spacing: -1px;
+}
+
+#header a{
+    color: white;
+    text-decoration: none;
+}
+
+#body{
+    padding: 0px 2px;
+}
+
+#body h1{
+    border-bottom: 2px solid #407ACA;
+}
+
+#footer{
+    color: #CCC;
+    font-size: 12px;
+    border-top: 1px solid #CCC;
+    margin-top: 20px;
+    padding-top: 5px;
+}
 
 input.wait{
     background-image: url(/static/wait-small.gif);
@@ -14,8 +74,9 @@ input.wait{
 
 div.wait{
     background-image: url(/static/wait-small.gif);
-    background-position: right center;
+    background-position: left center;
     background-repeat: no-repeat;
+    padding-left: 18px;
 }
 
 input.textinput{
@@ -51,6 +112,9 @@ input.wide{
     font-size: 12px;
     padding: 10px 20px;
     background: #FFFF88;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .notice{
@@ -105,4 +169,42 @@ ul.category-list li label, div.category-list div{
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+}
+
+.rss-icon{
+    padding-left: 18px;
+    background-image: url(/static/rss.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.post{
+    border: 1px solid #FAFAFA;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    padding: 4px 10px;
+}
+.post-title{
+    padding-left: 20px;
+    margin-left: 5px;
+    background: url(/static/quote.png) no-repeat left center;
+}
+
+.post-title a{
+    text-decoration: none;
+}
+
+.post-title a:hover{
+    text-decoration: underline;
+}
+
+.post-info{
+    font-size: 12px;
+}
+
+.post-preview{
+    padding: 5px 15px;
+    font-size: 13px;
 }

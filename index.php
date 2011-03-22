@@ -7,6 +7,7 @@ require_once("includes/post.php");
 
 
 $page = false;
+$js = array();
 
 if(!isset($_GET["page"])){
     // esileht
@@ -16,6 +17,7 @@ if(!isset($_GET["page"])){
     switch($_GET["page"]){
         case "addBlog":
             $page = "add_blog";
+            $js[] = "/static/addblog.js";
             break;
     }
 }
@@ -33,6 +35,7 @@ if(!$page){
     // näita soovitud lehte
     echo template_render("views/main.php", array(
         "title" => "$page",
+        "js" => $js,
         "body"=> template_render("views/".$page.".php")
     ));
 }

@@ -36,7 +36,27 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
 </head>
 <body>
 
-<?php echo $body?$body:"Not found :/"; ?>
+<div id="container">
+
+    <div id="header">
+        <div style="float: right;">
+            <?php if($_GET["page"]!="addBlog"):?>
+                <a href="/node/addBlog">Lisa blogi</a>
+            <?php else: ?>
+                Lisa blogi
+            <?php endif;?>
+        </div>
+        <h1><a href="/">Blogipang</a></h1>
+    </div>
+
+    <div id="body">
+        <?php echo $body?$body:"Not found :/"; ?>
+    </div>
+    
+    <div id="footer">   
+        &copy; 2011 kreata.ee
+    </div>
+</div>
 
 </body>
 </html>
