@@ -89,6 +89,23 @@
                     <div id="step_2_feed_container" style="display:none;" class="rss-icon"><input id="step_2_feed" type="text" placeholder="http://www.example.com/rss" class="textinput wide" name="feed" value="" /></div>
                 </td>
             </tr>
+            
+            <tr class="bbottom">
+                <td>
+                    <span class="title">Blogi keel</span>
+                </td>
+                <td>
+                    <select name="lang" id="step_2_lang">
+                        <?php
+                         $langs = array("xx"=>"Muu", "ru"=>"Vene", "et"=>"Eesti","en"=>"Inglise");
+                         
+                         foreach($langs as $key=>$name):
+                        ?>
+                        <option value="<?php echo $key; ?>"><?php echo $name; ?></option>
+                        <?php endforeach;?>
+                    </select>
+                </td>
+            </tr>
 
             <tr>
                 <td valign="top">

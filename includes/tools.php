@@ -267,3 +267,12 @@ function template_render($filename, $context = array()){
     return $output;
 }
 
+function detectLanguage($text){
+    // Automated querys are not allowed, so any request made needs to be "backed up"
+    // by a real user (userip)
+    $url = "https://ajax.googleapis.com/ajax/services/language/detect?".
+            "v=1.0&q=".urlencode($text)."&key=". GOOGLE_API_KEY ."&userip=".$_SERVER["REMOTE_ADDR"];
+    $response = load_from_url($url);
+    return $response?@json_decode($response, true):false;
+}
+

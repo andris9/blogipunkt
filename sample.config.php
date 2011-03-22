@@ -16,6 +16,11 @@ mb_internal_encoding("UTF-8");
 mb_regex_encoding("UTF-8");
 setlocale(LC_ALL,'et_EE.UTF-8');
 
+// Google API Key
+// genereeri aadressilt http://code.google.com/intl/et-EE/apis/loader/signup.html
+// vajalik blogide keele määramiseks
+define("GOOGLE_API_KEY", "secret_api_key");
+
 // user agent string for the bot
 define("BOT_USERAGENT","MyBlogBot/1.0 (+{$_SERVER["HTTP_HOST"]})");
 define("PUBSUB_VERIFY_TOKEN","secret_token");

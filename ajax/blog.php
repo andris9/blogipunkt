@@ -67,6 +67,7 @@ class AjaxBlog{
         list($scheme, $title) = explode("//",$url,2);
         $description = "";
         $categories = array();
+        $lang = "et";
 
         // kontrolli kas on juba olemas
         if($blog = Blog::getByURL($url)){
@@ -74,6 +75,7 @@ class AjaxBlog{
             $description = $blog["meta"]["description"];
             $categories = $blog["meta"]["categories"]?$blog["meta"]["categories"]:array();
             $feed_url = $blog["feed"];
+            $lang = $blog["lang"];
         }else{
             $html = load_from_url($url);
             $feed_url = detectFeed($html, $url);
@@ -96,9 +98,22 @@ class AjaxBlog{
             if(!$feed->error()){
                 $title = text_decode($feed->get_title());
                 $description = text_decode($feed->get_description());
+                
+                $texts = "";
+                foreach ($feed->get_items() as $item){
+                    $texts .= trim(preg_replace("/\s(\s+)?/"," ",strip_tags(str_replace(">","> ",$item->get_title()))))." ";
+                    $texts .= trim(preg_replace("/\s(\s+)?/"," ",strip_tags(str_replace(">","> ",$item->get_content()))));
+                    if(strlen($texts)>1024)break;
+                }
+                $texts = trim(substr($texts, 0, 1024));
+                
+                
+                $language_data = detectLanguage($texts);
+                $lang = $language_data["responseData"]["language"];
             }
             $feed->__destruct(); // Do what PHP should be doing on it's own.
             unset($feed);
+            unset($item);
         }
 
         self::$response["status"] = "OK";
@@ -107,6 +122,7 @@ class AjaxBlog{
             "url" => $url,
             "feed" => $feed_url,
             "title" => htmlspecialchars($title),
+            "lang" => $lang?htmlspecialchars($lang):"et",
             "description" => htmlspecialchars($description),
             "categories" => $categories,
             "exists"=> !!$blog
@@ -123,6 +139,7 @@ class AjaxBlog{
         $url = $request["url"];
         $feed = $request["feed"];
         $title = trim($request["title"]);
+        $lang = trim($request["lang"]);
         $description = false; //trim($request["description"]);
         $lang = trim($request["lang"]);
 
@@ -142,6 +159,7 @@ class AjaxBlog{
             $blog["url"] = $url;
             $blog["feed"] = $feed;
             $blog["title"] = $title;
+            $blog["lang"] = $lang;
             $blog["meta"]["categories"] = $categories;
 
             self::$response["data"] = array(
@@ -149,6 +167,7 @@ class AjaxBlog{
                 "url" => $url,
                 "feed" => $feed,
                 "title" => htmlspecialchars($title),
+                "lang" => htmlspecialchars($lang),
                 "description" => htmlspecialchars($blog["meta"]["description"]),
                 "categories" => $categories,
                 "exists"=> true
@@ -177,6 +196,7 @@ class AjaxBlog{
                 "id" => $blog["id"],
                 "url" => $url,
                 "feed" => $feed,
+                "lang" => $lang,
                 "title" => htmlspecialchars($title),
                 "description" => htmlspecialchars($blog["meta"]["description"]),
                 "categories" => $categories,

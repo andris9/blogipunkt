@@ -36,6 +36,9 @@ var AddForm = {
             feed_text: $("step_2_feed_text"),
             feed: $("step_2_feed"),
             feed_container: $("step_2_feed_container"),
+            
+            lang: $("step_2_lang"),
+            
             edit: $("step_2_button_edit"),
             back: $("step_2_button_back"),
             next: $("step_2_button_next")
@@ -214,6 +217,13 @@ var AddForm = {
         this.domCache.step2.feed_text.show();
         this.domCache.step2.feed_container.hide();
 
+        // lang
+        $A(this.domCache.step2.lang.options).each((function(option){
+            if(option.value == this.data.step2.lang){
+                option.selected = true;
+            }
+        }).bind(this));
+    
         // categories
         this.domCache.step2.category_checkboxes.each((function(cb){
             if(this.data.step2.categories.indexOf(String(cb.value))<0){
@@ -277,6 +287,7 @@ var AddForm = {
         this.data.step2.title = this.domCache.step2.title.value.strip();
         this.data.step2.url = this.domCache.step2.url.value.strip();
         this.data.step2.feed = this.domCache.step2.feed.value.strip();
+        this.data.step2.lang = this.domCache.step2.lang.value.strip();
 
         if(!this.data.step2.url.match(/^https?:\/\//)){
             this.data.step2.url = "http://"+this.data.step2.url;
@@ -303,7 +314,8 @@ var AddForm = {
         var params = [
             "title="+encodeURIComponent(this.data.step2.title),
             "url="+encodeURIComponent(this.data.step2.url),
-            "feed="+encodeURIComponent(this.data.step2.feed)
+            "feed="+encodeURIComponent(this.data.step2.feed),
+            "lang="+encodeURIComponent(this.data.step2.lang)
         ];
 
         this.data.step2.categories.each(function(cat){

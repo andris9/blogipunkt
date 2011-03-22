@@ -54,7 +54,7 @@ class Blog{
      * uue blogina baasi. Juhul kui ei õnnestu, tuleks kasutada Blog::save()
      * meetodit. Tagastusväärtuseks on loodud/leitud blogi objekt või false
      **/
-    public static function add($url, $feed = false, $lang = "et_ee", $title = false, $description = false, $categories = false){
+    public static function add($url, $feed = false, $lang = "et", $title = false, $description = false, $categories = false){
 
         // Check if already exists
         $blog = self::getByURL($url);
@@ -393,7 +393,7 @@ class Blog{
             "updated"=> $data["updated"],
             "title"  => $data["title"],
             "meta"   => $data["meta"]?unserialize($data["meta"]):array(),
-            "lang"   => $data["lang"]?$data["lang"]:"et_ee",
+            "lang"   => $data["lang"]?$data["lang"]:"et",
             "checked"=> $data["checked"]!="0000-00-00 00:00:00"?$data["checked"]:false,
             "queued" => $data["queued"]=="Y"?true:false
         );
@@ -434,5 +434,5 @@ class Blog{
         self::$categories = $categories;
         return $categories;
     }
-
+    
 }
