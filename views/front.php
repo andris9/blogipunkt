@@ -2,7 +2,7 @@
 
 
 <div class="posts">
-    <?php foreach(Post::getList() as $post):?>
+    <?php foreach(Post::getList(0, 10) as $post):?>
     <div class="post">
         <div class="post-title">
             <a href="<?php echo htmlspecialchars($post["url"]);?>" class="out id:<?php echo $post["id"];?>"><?php echo htmlspecialchars($post["title"]);?></a><br />
@@ -14,7 +14,7 @@
         </div>
         <div class="post-preview">
             <?php
-                $contents = mb_substr(strip_tags($post["contents"]),0,200);
+                $contents = $post["snippet"]?$post["snippet"]:mb_substr(strip_tags($post["contents"]),0,200);
                 echo htmlspecialchars($contents);
             ?>
         </div>
