@@ -276,3 +276,22 @@ function detectLanguage($text){
     return $response?@json_decode($response, true):false;
 }
 
+function generateSnippet($text){
+	$text = str_replace(">","> ", $text);
+    $text = strip_tags($text,"<p><br>");
+    $text = preg_replace("/\s\s*/"," ",$text);
+    $text = preg_replace("/<.*?>/","\n",$text);
+    $text = preg_replace("/\.\s/",".\n",$text);
+    $lines = split("\n",$text);
+    $text = "";
+    while(count($lines)){
+    	$text .= array_shift($lines)." ";
+        if(strlen($text)>300)break;
+    }
+    $text = trim(preg_replace("/\s\s*/"," ",$text));
+    $text = trim(preg_replace("/\s*([\.,”:‘)])\s+/","$1 ",$text));
+    $text = trim(preg_replace("/\s+([(“])\s*/"," $1",$text));
+
+    return $text;
+}
+

@@ -81,13 +81,15 @@ class Post{
         if($time<100)
             $time = time();
 
+        $contents = text_decode($item->get_content());
         $data = array(
             "blog" => $blog["id"],
             "title" => text_decode($item->get_title()),
             "date" => date("Y-m-d H:i:s", $time),
             "author" => $author,
             "tags" => serialize($tags),
-            "contents" => text_decode($item->get_content()),
+            "contents" => $contents,
+            "snippet" => generateSnippet($contents),
             "url" => $url
         );
 
@@ -139,6 +141,7 @@ class Post{
             "author" => $data["author"],
             "tags" => $data["tags"]?unserialize($data["tags"]):false,
             "contents" => $data["contents"],
+            "snippet" => $data["snippet"],
             "url" => $data["url"],
             "votes" => intval($data["votes"]),
             "points" => floatval($data["points"])
@@ -162,6 +165,7 @@ class Post{
             "author" => $post["author"],
             "tags" => $post["tags"]?serialize($post["tags"]):"",
             "contents" => $post["contents"],
+            "snippet" => $post["snippet"]?$post["snippet"]:generateSnippet($post["contents"]),
             "url" => $post["url"],
             "votes" => intval($post["votes"]),
             "points" => floatval($post["points"])
