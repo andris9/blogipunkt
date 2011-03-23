@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Masin: digituvastus.org
--- Tegemisaeg: 22.03.2011 kell 17:01:40
+-- Tegemisaeg: 23.03.2011 kell 15:11:46
 -- Serveri versioon: 5.1.45
 -- PHP versioon: 5.2.10
 
@@ -12,6 +12,24 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Andmebaas: `vhost16899s1`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktuur tabelile `archive`
+--
+
+CREATE TABLE IF NOT EXISTS `archive` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `blog` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ip` varchar(20) COLLATE utf8_estonian_ci NOT NULL,
+  `data` text COLLATE utf8_estonian_ci NOT NULL,
+  `hash` varchar(32) COLLATE utf8_estonian_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `hash` (`hash`),
+  KEY `blog` (`blog`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci COMMENT='Blogi andmete muudatused';
 
 -- --------------------------------------------------------
 
@@ -25,9 +43,10 @@ CREATE TABLE IF NOT EXISTS `blogs` (
   `feed` varchar(255) COLLATE utf8_estonian_ci NOT NULL,
   `hub` varchar(255) COLLATE utf8_estonian_ci NOT NULL,
   `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `disabled` set('Y','N') COLLATE utf8_estonian_ci NOT NULL DEFAULT 'N',
   `title` varchar(255) COLLATE utf8_estonian_ci NOT NULL,
   `meta` text COLLATE utf8_estonian_ci NOT NULL,
-  `lang` varchar(10) COLLATE utf8_estonian_ci NOT NULL DEFAULT 'et_ee',
+  `lang` varchar(10) COLLATE utf8_estonian_ci NOT NULL DEFAULT 'et',
   `checked` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `queued` set('Y','N') COLLATE utf8_estonian_ci NOT NULL DEFAULT 'N',
   `lease` int(11) NOT NULL,
@@ -38,7 +57,8 @@ CREATE TABLE IF NOT EXISTS `blogs` (
   KEY `lease` (`lease`),
   KEY `feed` (`feed`),
   KEY `hub` (`hub`),
-  KEY `language` (`lang`)
+  KEY `language` (`lang`),
+  KEY `disabled` (`disabled`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci COMMENT='Blogide põhitabel';
 
 -- --------------------------------------------------------
@@ -81,6 +101,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `author` varchar(50) COLLATE utf8_estonian_ci NOT NULL,
   `tags` varchar(255) COLLATE utf8_estonian_ci NOT NULL,
   `contents` text COLLATE utf8_estonian_ci NOT NULL,
+  `snippet` text COLLATE utf8_estonian_ci NOT NULL,
   `url` varchar(255) COLLATE utf8_estonian_ci NOT NULL,
   `votes` int(11) NOT NULL,
   `points` double NOT NULL,
@@ -90,22 +111,6 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `date` (`date`),
   KEY `points` (`points`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci COMMENT='Postitused';
-
--- --------------------------------------------------------
-
---
--- Struktuur tabelile `queue`
---
-
-CREATE TABLE IF NOT EXISTS `queue` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ip` varchar(20) COLLATE utf8_estonian_ci NOT NULL,
-  `data` text COLLATE utf8_estonian_ci NOT NULL,
-  `hash` varchar(32) COLLATE utf8_estonian_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `hash` (`hash`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci COMMENT='Järjekorras olevad muudatused';
 
 -- --------------------------------------------------------
 
