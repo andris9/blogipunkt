@@ -5,7 +5,7 @@
     <?php foreach(Post::getList() as $post):?>
     <div class="post">
         <div class="post-title">
-            <a href="<?php echo htmlspecialchars($post["url"]);?>"><?php echo htmlspecialchars($post["title"]);?></a><br />
+            <a href="<?php echo htmlspecialchars($post["url"]);?>" class="out id:<?php echo $post["id"];?>"><?php echo htmlspecialchars($post["title"]);?></a><br />
             <span class="post-info">
                 <?php echo strftime("%A, %e %b %y %H:%M", strtotime($post["date"]));?>
                 blogis
@@ -18,8 +18,8 @@
                 echo htmlspecialchars($contents);
             ?>
         </div>
-        
-        
+
+
     </div>
 
     <?php endforeach; ?>

@@ -59,17 +59,19 @@ class Blog{
         // Check if already exists
         $blog = self::getByURL($url);
         if($blog){
-            return $blog;
+            //return $blog;
+        }else{
+        	$blog = self::blank();
         }
 
-        $blog = self::blank();
+
         $blog["url"] = urltrim(resolve_url($url));
 
         if($title)
             $blog["title"] = $title;
 
         if($description)
-            $blog["meta"] = $description;
+            $blog["meta"]["description"] = $description;
 
         if($lang)
             $blog["lang"] = $lang;
@@ -395,26 +397,31 @@ class Blog{
             "meta"   => $data["meta"]?unserialize($data["meta"]):array(),
             "lang"   => $data["lang"]?$data["lang"]:"et",
             "checked"=> $data["checked"]!="0000-00-00 00:00:00"?$data["checked"]:false,
-            "queued" => $data["queued"]=="Y"?true:false
+            "queued" => $data["queued"]=="Y"?true:false,
+            "disabled" => $data["disabled"]=="Y"?true:false
         );
 
         return $blog;
     }
 
-    public static function queueSave($blog){
+    public static function archiveBlogData($blog){
 
         $data = serialize($blog);
         $hash = md5($data);
 
-        $sql = "INSERT INTO queue (ip, data, hash) VALUES('%s','%s','%s')";
+        $sql = "INSERT INTO archive (ip, blog, data, hash) VALUES('%s','%s','%s','%s')";
         mysql_query(sprintf($sql,
             mysql_real_escape_string($_SERVER["REMOTE_ADDR"]),
+            mysql_real_escape_string($blog["id"]),
             mysql_real_escape_string($data),
             mysql_real_escape_string($hash)
         ));
 
     }
 
+    /**
+     *
+     */
     private static $categories = false;
 
     public static function getCategories(){
@@ -434,5 +441,5 @@ class Blog{
         self::$categories = $categories;
         return $categories;
     }
-    
+
 }

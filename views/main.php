@@ -27,6 +27,7 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
 
   <!-- JavaScript -->
   <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js" type="text/javascript"></script>
+  <script src="/static/main.js" type="text/javascript"></script>
   <?php if($js):?>
     <? foreach($js as $file):?>
         <script src="<?php echo $file;?>" type="text/javascript"></script>
@@ -52,8 +53,8 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
     <div id="body">
         <?php echo $body?$body:"Not found :/"; ?>
     </div>
-    
-    <div id="footer">   
+
+    <div id="footer">
         &copy; 2011 kreata.ee
     </div>
 </div>

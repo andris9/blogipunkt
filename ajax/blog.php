@@ -98,16 +98,14 @@ class AjaxBlog{
             if(!$feed->error()){
                 $title = text_decode($feed->get_title());
                 $description = text_decode($feed->get_description());
-                
+
                 $texts = "";
                 foreach ($feed->get_items() as $item){
                     $texts .= trim(preg_replace("/\s(\s+)?/"," ",strip_tags(str_replace(">","> ",$item->get_title()))))." ";
                     $texts .= trim(preg_replace("/\s(\s+)?/"," ",strip_tags(str_replace(">","> ",$item->get_content()))));
                     if(strlen($texts)>1024)break;
                 }
-                $texts = trim(substr($texts, 0, 1024));
-                
-                
+                $texts = trim(mb_substr($texts, 0, 350));
                 $language_data = detectLanguage($texts);
                 $lang = $language_data["responseData"]["language"];
             }
@@ -166,15 +164,18 @@ class AjaxBlog{
                 "id" => $blog["id"],
                 "url" => $url,
                 "feed" => $feed,
-                "title" => htmlspecialchars($title),
                 "lang" => htmlspecialchars($lang),
+                "title" => htmlspecialchars($title),
                 "description" => htmlspecialchars($blog["meta"]["description"]),
                 "categories" => $categories,
                 "exists"=> true
             );
             // TODO: save changes
 
-            Blog::queueSave($blog);
+            Blog::add($url, $feed, $lang, $title, $blog["meta"]["description"], $categories);
+
+            // Salvesta versioon hilisemaks kontrolliks
+            Blog::archiveBlogData($blog);
 
             return;
         }
@@ -202,6 +203,9 @@ class AjaxBlog{
                 "categories" => $categories,
                 "exists"=> true
             );
+
+            // Salvesta versioon hilisemaks kontrolliks
+            Blog::archiveBlogData($blog);
         }else{
         	self::$response["message"]="Salvestamine ebaõnnestus";
         }

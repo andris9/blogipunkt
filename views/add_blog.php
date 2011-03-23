@@ -1,11 +1,11 @@
 
-<h1>Blogi lisamine</h1>
+<h1>Blogi lisamine/muutmine</h1>
 
 <!-- STEP 1 -->
 
 <div class="edit_blog" id="step_1_main">
 
-    <h2>Lisa uus blogi</h2>
+    <h2>Vali blogi</h2>
 
     <form method="post" action="#" id="step_1_form">
         <table border="0" cellspacing="0" cellpadding="0">
@@ -42,7 +42,7 @@
 
             <tr id="step_2_warning_container" style="display:none">
                 <td colspan="2">
-                    <div id="step_2_warning" class="warning"><strong>NB! See blogi on andmebaasis juba olemas</strong><br />Võimalik on muuta blogi andmeid, kuid need ei rakendu automaatselt ja lähevad ülevaatamisele</div>
+                    <div id="step_2_warning" class="warning"><strong>NB! See blogi on andmebaasis juba olemas</strong><br />Juhul kui Sa ei ole blogi omanik võid minna vastuolla blogi omaniku arvamusega blogi seadetest</div>
                 </td>
             </tr>
 
@@ -89,21 +89,26 @@
                     <div id="step_2_feed_container" style="display:none;" class="rss-icon"><input id="step_2_feed" type="text" placeholder="http://www.example.com/rss" class="textinput wide" name="feed" value="" /></div>
                 </td>
             </tr>
-            
+
             <tr class="bbottom">
                 <td>
                     <span class="title">Blogi keel</span>
                 </td>
                 <td>
+
                     <select name="lang" id="step_2_lang">
+                        <option value="et" style="font-weight: bold">eesti</option>
                         <?php
-                         $langs = array("xx"=>"Muu", "ru"=>"Vene", "et"=>"Eesti","en"=>"Inglise");
-                         
+                         $langs = json_decode('{"af":"afrikaani","sq":"albaania","ar":"araabia","hy":"armeenia","az":"aserbaid\u017eaani","eu":"baski","bg":"bulgaaria","et":"eesti","gl":"galiitsia","ka":"gruusia","ht":"Haiti-kreool","iw":"heebrea","zh-CN":"Hiina","hi":"hindi","es":"hispaania","nl":"hollandi","hr":"horvaadi","ga":"iiri","id":"indoneesia","en":"inglise","is":"islandi","it":"itaalia","ja":"jaapani","yi":"jidi\u0161i","ca":"katalaani","ko":"korea","el":"kreeka","la":"ladina","lt":"leedu","lv":"l\u00e4ti","mk":"makedoonia","ms":"malai","mt":"malta","no":"norra","tl":"pilipino","pl":"poola","pt":"portugali","fr":"prantsuse","fa":"p\u00e4rsia","sv":"rootsi","ro":"rumeenia","de":"saksa","sr":"serbia","sk":"slovaki","sl":"sloveeni","fi":"soome","sw":"suahiili","da":"taani","th":"tai","cs":"t\u0161ehhi","tr":"t\u00fcrgi","cy":"uelsi","uk":"ukraina","hu":"ungari","ur":"urdi","be":"valgevene","ru":"vene","vi":"vietnami"}', true);
+
                          foreach($langs as $key=>$name):
                         ?>
                         <option value="<?php echo $key; ?>"><?php echo $name; ?></option>
                         <?php endforeach;?>
                     </select>
+
+                    <div style="margin-top: 5px; font-size: 11px; vertical-align:middle;">keele tuvastas <img src="http://www.google.com/uds/css/small-logo.png" style="vertical-align:middle;"/></div>
+
                 </td>
             </tr>
 
@@ -126,7 +131,7 @@
             <tr>
                 <td colspan="2">
                     <input id="step_2_button_back" type="button" name="tagasi" value="&laquo; Tagasi" />
-                    <input id="step_2_button_next" type="submit" name="mine" value="Edasi &raquo;" />
+                    <input id="step_2_button_next" type="submit" name="mine" value="Salvesta andmed" />
                 </td>
             </tr>
 
@@ -144,7 +149,7 @@
 
         <tr id="step_3_warning_container" style="display:none">
             <td colspan="3">
-                <div id="step_3_warning" class="warning"><strong>NB! See blogi on andmebaasis juba olemas</strong><br />Salvestatud andmed lähevad esialgu ülevaatamisele</div>
+                <div id="step_3_warning" class="warning"><strong>NB! Muutsid olemasoleva blogi andmeid</strong></div>
             </td>
         </tr>
 

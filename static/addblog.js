@@ -221,6 +221,7 @@ var AddForm = {
         $A(this.domCache.step2.lang.options).each((function(option){
             if(option.value == this.data.step2.lang){
                 option.selected = true;
+                throw $break;
             }
         }).bind(this));
     
@@ -385,7 +386,6 @@ var AddForm = {
     },
 
     waitStep2: function(){
-        this.fillStep2Data();
         this.domCache.step2.next.disabled = true;
         this.domCache.step2.back.disabled = true;
         this.domCache.step2.edit.disabled = true;
