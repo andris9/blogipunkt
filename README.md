@@ -1,12 +1,12 @@
-# Blogipass
+# Blogipunkt
 
-**Blogipass** on projekt blogikataloogi loomiseks. Hetkel on olemas enamvähem valmis back-end (blogide lisamise API, postituste korjamine jne) ning lihtne demo front.
+**Blogipunkt** on projekt blogikataloogi loomiseks. Hetkel on olemas enamvähem valmis back-end (blogide lisamise API, postituste korjamine jne) ning lihtne demo front.
 
 ## Install
 
 Muuda faili *sample.config.php* nime *config.php* vastu ja uuenda selle sisu
 
-Lisa andmebaasitabelid failist *blogipass.sql*
+Lisa andmebaasitabelid failist *blogipunkt.sql*
 
 ### Cron
 
