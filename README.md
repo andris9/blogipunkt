@@ -95,6 +95,6 @@ voo aadressi otsida elemendist *link* (elemendi nimeruumiks on standardne *"http
 
 WordPress kasutab RSS formaati ning kuna selles vaikimisi kommentaaride element puudub, kasutatakse selle jaoks nimeruumi *"http://wellformedweb.org/CommentAPI/"* elementi *commentRss*
 
-    <wfw:commentRss>feed_utl</wfw:commentRss>
+    <wfw:commentRss>feed_url</wfw:commentRss>
 
-**NB!** Kommentaari RSS/Atom voo faili puhul *If-Modified-Since* ei tööta, kuna reeglina kasutab server selleks viimasena salvestatud postituse aega!
+**NB!** Kommentaari RSS/Atom voo faili puhul *If-Modified-Since* ei tööta, kuna reeglina kasutab server selleks väärtuseks viimasena salvestatud postituse aega!
