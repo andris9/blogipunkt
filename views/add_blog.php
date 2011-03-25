@@ -203,6 +203,6 @@
 
 
 <script>
-AddForm.MAX_CATEGORIES = <?php echo BLOG_MAX_CATEGORIES; ?>;
-AddForm.categories = <?php echo json_encode(Blog::getCategories());?>;
+    KREATA.AddForm.MAX_CATEGORIES = <?php echo BLOG_MAX_CATEGORIES; ?>;
+    KREATA.AddForm.categories = <?php echo json_encode(Blog::getCategories());?>;
 </script>

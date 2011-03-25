@@ -28,6 +28,16 @@ andmemaht on piiratud ja kataloogis on vaid moodsamad blogid, võib selle väja 
 
 Näiteks [Zone.ee](http://www.zone.ee) ja [Veebimajutus.ee](http://www.veebimajutus.ee) virtuaalserverites on tingimused täidetud out of the box.
 
+
+### Katloogide struktuur
+
+  * **ajax** - siin asuvad Ajax päringute haldajad
+  * **bot** - erinevad Cron skriptid ja muud autonoomsed asjad (PubSubHubbub klient jne)
+  * **includes** - sisemised API'd
+    * **vendor** - kolmanda osapoole skriptid (n. SimplePie)
+  * **static** - staatilised failid (JS, CSS, pildid)
+  * **views** - lehtede templiidid, *main.php* on põhikonteiner ja muud käivad selle sisse $body väärtusena
+
 ### Litsents
 
 Antud projekt on välja antud oluliste piiranguteta [MIT](blob/master/LICENSE) vabavara litsensiga.
