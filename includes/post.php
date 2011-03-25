@@ -271,7 +271,10 @@ class Post{
      * Posts.get_comments_feed($item) -> String
      * - $item (Object): SimplePie item
      * 
-     * Funktsioon tuvastab kommentaaride RSS aadressi
+     * Funktsioon tuvastab kommentaaride RSS aadressi.
+     * 
+     * TODO: Lisada Disqus tugi. Selle jaoks tuleb paraku tõmmata alla ka iga postituse sisu,
+     *       et selle HTML koodist Disqus markereid otsida, RSS failis neid pole.
      **/
     public static function get_comments_feed(&$item){
         $comment_feed = "";
