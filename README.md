@@ -4,9 +4,14 @@
 
 ## Install
 
-Muuda faili *sample.config.php* nime *config.php* vastu ja uuenda selle sisu
-
-Lisa andmebaasitabelid failist *blogipunkt.sql*
+  * Lae Blogipunkti failid alla [siit](https://github.com/andris9/blogipunkt/zipball/master)
+  * Kopeeri Blogipunkti failid veebiserveri juurkataloogi
+  * Muuda faili *sample.config.php* nime *config.php* vastu ja uuenda selle sisu
+  * Lisa andmebaasitabelid failist *blogipunkt.sql*
+  * Lisa mõni kirje andmebaasitabelisse *categories* (näiteks phpMyAdmin abil)
+  * Ava oma uus Blogipunkt veebilehitsejas ja kliki lingil "Lisa blogi"
+  * Lisa uus blogi. Kui nüüd esileht avada, peaks seal olema blogi viimased postitused
+  * Sea üles CRON (vaata järgmist punkti), et uueneks PubSubHubbub *lease* ning vanemat tüüpi blogide (ilma PubSubHubbubtoetuseta) postitusi kontrollitaks Weblogs.com listist
 
 ### Cron
 
