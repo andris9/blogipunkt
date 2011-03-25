@@ -59,6 +59,14 @@ class Post{
         	return false;
         }
 
+        // discard posts from external domains
+        // some blogs include flickr, del.icio.us etc. newsfeed items as posts
+        $blog_host = parse_url($blog["url"], PHP_URL_HOST);
+        $post_host = parse_url($url, PHP_URL_HOST);
+        if($blog_host != $post_host){
+        	return false;
+        }
+
         // leia postituse autor
         if($author = $item->get_author()){
         	$author = $author->get_name();
@@ -90,7 +98,8 @@ class Post{
             "tags" => serialize($tags),
             "contents" => $contents,
             "snippet" => generateSnippet($contents),
-            "url" => $url
+            "url" => $url,
+            "comment_feed" => self::get_comments_feed(&$item)
         );
 
         include_once(dirname(__FILE__)."/event.php");
@@ -102,7 +111,6 @@ class Post{
         Event::fire("post:presave", $ref);
 
         return self::serialize($data);
-
     }
 
 
@@ -143,6 +151,8 @@ class Post{
             "contents" => $data["contents"],
             "snippet" => $data["snippet"],
             "url" => $data["url"],
+            "comment_feed" => $data["comment_feed"],
+            "comment_data" => $data["comment_data"]?unserialize($data["comment_data"]):array(),
             "votes" => intval($data["votes"]),
             "points" => floatval($data["points"])
         );
@@ -168,7 +178,8 @@ class Post{
             "snippet" => $post["snippet"]?$post["snippet"]:generateSnippet($post["contents"]),
             "url" => $post["url"],
             "votes" => intval($post["votes"]),
-            "points" => floatval($post["points"])
+            "points" => floatval($post["points"]),
+            "comment_feed" => $post["comment_feed"]
         );
 
         if($post["id"] && $updated){
@@ -254,6 +265,29 @@ class Post{
         	$data[] = $post;
         }
         return $data;
+    }
+
+    /**
+     * Posts.get_comments_feed($item) -> String
+     * - $item (Object): SimplePie item
+     * 
+     * Funktsioon tuvastab kommentaaride RSS aadressi
+     **/
+    public static function get_comments_feed(&$item){
+        $comment_feed = "";
+        if($comment_tags = $item->get_item_tags("http://wellformedweb.org/CommentAPI/","commentRss")){ // RSS
+            $comment_feed = $comment_tags[0]["data"];
+        }elseif($link_tags = $item->get_item_tags("http://www.w3.org/2005/Atom","link")){ // ATOM
+            foreach($link_tags as $link_elm){
+                if($link_attribs = $link_elm["attribs"][""]){
+                    if($link_attribs["rel"]=="replies" && $link_attribs["type"]=="application/atom+xml"){
+                        $comment_feed = $link_attribs["href"];
+                        break;
+                    }
+                } 
+            }
+        };
+        return $comment_feed?$comment_feed:false;
     }
 
 }

@@ -93,13 +93,17 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `contents` text COLLATE utf8_estonian_ci NOT NULL,
   `snippet` text COLLATE utf8_estonian_ci NOT NULL,
   `url` varchar(255) COLLATE utf8_estonian_ci NOT NULL,
+  `comment_feed` varchar(255) COLLATE utf8_estonian_ci NOT NULL,
+  `comment_data` text COLLATE utf8_estonian_ci NOT NULL,
+  `comment_queued` set('Y','N') COLLATE utf8_estonian_ci NOT NULL DEFAULT 'N',
   `votes` int(11) NOT NULL,
   `points` double NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`),
   KEY `blog` (`blog`),
   KEY `date` (`date`),
-  KEY `points` (`points`)
+  KEY `points` (`points`),
+  KEY `comment_queued` (`comment_queued`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci COMMENT='Postitused';
 
 -- --------------------------------------------------------
