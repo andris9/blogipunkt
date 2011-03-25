@@ -1,9 +1,30 @@
 <?php
 
+/*
+ * tools.php
+ *
+ * Pakub erinevaid kasulikke funktsioone, nagu näiteks RSS aadressi tuvastamine jms.
+ */
+
+/**
+ * text_decode($str) -> String
+ * $str (String): tekst, mida muuta
+ *
+ * Tekstis asendatakse kõik html entity'd nende UTF-8 vastava sümboliga
+ **/
 function text_decode($str){
     return trim(html_entity_decode($str, ENT_QUOTES, 'UTF-8'));
 }
 
+/**
+ * urltrim($url) -> String
+ * - $url (String): veebiaadress, mida muuta
+ *
+ * Funktsioon parandab veebiaadressi, viies selle ühtsele kujule,
+ * eemaldatakse algusest "feed:", lõpust korjatakse erinevad statistika
+ * parameetrid (google analytics), eemaldatakse viimane slash, loobutakse ka
+ * index.html jms lõppudest
+ **/
 function urltrim($url){
     $url = trim($url);
 
@@ -47,6 +68,15 @@ function urltrim($url){
     return build_url($urlparts);
 }
 
+/**
+ * resolve_url($url) -> String
+ * - $url (String): veebiaadress, mida kontrollida
+ *
+ * Funktsioon kontrollib ümbersuunamisi, võttes sisendiks suvalise URL'i ja
+ * tagastades lõpliku sihtaadressi või false, kui ilmnes viga. Vajalik tuvastamaks
+ * unikaalseid aadresse, kui blogi kasutab erinevaid ümbersuunamise statistika URL'e
+ * või aadressi lühendajaid
+ **/
 function resolve_url($url){
 
     $sourceurl = urltrim($url);
@@ -59,6 +89,13 @@ function resolve_url($url){
     return urlexists($url);
 }
 
+/**
+ * urlexists($url) -> String
+ * - $url (String): veebiaadress, mida kontrollida
+ *
+ * Funktsioon kontrollib, kas veebiaadress eksisteerib või mitte. Juhul kui
+ * ekistseerib, tagastatakse lõppsihi aadress, vastasel korral false
+ **/
 function urlexists($url){
     $ch = curl_init();
     $options = array(CURLOPT_URL        => $url,
@@ -98,6 +135,13 @@ function urlexists($url){
     return $desturl;
 }
 
+/**
+ * load_from_url($url) -> String
+ * - $url (String): veebiaadress, mille sisu laadida
+ *
+ * Funktsioon laeb etteantud aadressi sisu. Sama mis file_get_contents($url),
+ * kui kasutab korrektset user agent väärtust
+ **/
 function load_from_url($url){
     $ch = curl_init();
     $options = array(CURLOPT_URL        => $url,
@@ -125,7 +169,14 @@ function load_from_url($url){
     return $content;
 }
 
-
+/**
+ * build_url($urlparts) -> String
+ * - $urlparts (Object): parse_url funktsiooniga saadud massiiv
+ *
+ * Funktsioon genereerib veebiaadressi, kasutades sisendina parse_url
+ * funktsiooni abil saadud massiivi. Vajalik kuna seda esialgset massiivi
+ * on teinekord vaja toimetada
+ **/
 function build_url($urlparts){
     $newparts = array();
     if($urlparts["scheme"])$newparts[] = $urlparts["scheme"]."://";
@@ -142,6 +193,18 @@ function build_url($urlparts){
     return trim(join("", $newparts), " \t\n\r\0\x0B/");
 }
 
+/**
+ * baseUrl($url, $base) -> String
+ * - $url (String): veebiaadress, mida kontrollida
+ * - $base (String): aadressi algus
+ *
+ * Funktsioon võtab sisendiks relatiivse veebiaadressi ja selle aluse ning
+ * genereerib absoluutse aadressi.
+ * Näiteks
+ *     baseUrl("../icon.gif", "http://www.example.com/scripts/"); // -> http://www.example.com/icon.gif
+ *
+ * Oluline, kui näiteks RSS aadress HTML failis on relatiivne.
+ **/
 function baseUrl($url, $base){
 
     $baseparts = parse_url($base);
@@ -188,7 +251,13 @@ function baseUrl($url, $base){
     return build_url($baseparts);
 }
 
-
+/**
+ * detectFeed($html, $url) -> String
+ * - $html (String): lehe HTML sisu
+ * - $url (String): lehe aadress
+ *
+ * Funktsioon tuvastab lehe sisu järgi RSS aadressi.
+ **/
 function detectFeed($html, $url){
 
     // kui tegu livejournal või diaryland blogiga
@@ -258,6 +327,23 @@ function detectFeed($html, $url){
     return baseUrl($final, $baseUrl);
 }
 
+/**
+ * template_render($filename [, $context = array()]) -> String
+ * - $filename (String): faili asukoht kettal
+ * - $context (Array): massiiv, mille elementidest luuakse kohalikud muutujad
+ *
+ * Genereerib templiidifailist (PHP fail) valmis stringi. Templiidifaili sees
+ * on võimalik kasutada lokaalseid muutujaid, mis pärinevad $context massiivist
+ *
+ * Kontekst:
+ *     $context = array("muutuja1"=>"väärtus1");
+ *
+ * Templiidifail template.inc
+ *     <p><?php echo $muutuja1; ?></p>
+ *
+ * Tulemus:
+ *     echo template_render("template.inc", $context); // -> <p>väärtus1</p>
+ **/
 function template_render($filename, $context = array()){
     extract($context, EXTR_SKIP);
     ob_start();
@@ -267,6 +353,16 @@ function template_render($filename, $context = array()){
     return $output;
 }
 
+/**
+ * detectLanguage($text) -> Array
+ * - $text(String): tekst mille keelt kontrollida, max ~350 tm.
+ *
+ * Funktsioon tuvastab Google Language API abil teksti keele. Vajalik on seada
+ * config.php failis GOOGLE_API_KEY väärtus.
+ *
+ * Automaatsed päringud ei ole lubatud, päringu peab algatama inimene, seetõttu
+ * on parameetrina kaasas ka päringu algatanud inimese IP
+ **/
 function detectLanguage($text){
     // Automated querys are not allowed, so any request made needs to be "backed up"
     // by a real user (userip)
@@ -276,6 +372,12 @@ function detectLanguage($text){
     return $response?@json_decode($response, true):false;
 }
 
+/**
+ * generateSnippet($text) -> String
+ * - $text (String): põhitekst HTML vormingus
+ *
+ * Funktsioon genereerib sissejuhatava lõigu võttes aluseks HTML teksti
+ **/
 function generateSnippet($text){
 	$text = str_replace(">","> ", $text);
     $text = strip_tags($text,"<p><br>");

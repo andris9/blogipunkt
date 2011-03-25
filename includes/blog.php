@@ -404,6 +404,14 @@ class Blog{
         return $blog;
     }
 
+    /**
+     * Blog.archiveBlogData($blog) -> undefined
+     * - $blog (Object): blogiobjekt
+     *
+     * Funktsioon salvestab blogi andmed hilisemaks kontrolliks - kui on vaja taastada
+     * varasemat seisu vms. hash väärtus on unikaalne ning see on tagamaks, et sama sisu
+     * mitu korda ei salvestataks
+     **/
     public static function archiveBlogData($blog){
 
         $data = serialize($blog);
@@ -420,10 +428,18 @@ class Blog{
     }
 
     /**
+     * Blog.$categories -> Array
      *
+     * Puhver kategooria teemade jaoks, et ei oleks vaja mitu SQL päringut teha
      */
     private static $categories = false;
 
+    /**
+     * Blog.getCategories() -> Array
+     *
+     * Tagastab kasutada olevate kategooriate nimekirja kujul
+     *   array("cat_id"=>array("name"=>"kategooria nimi", "count"=>"mitu blogi selles"))
+     **/
     public static function getCategories(){
         if(self::$categories){
         	return self::$categories;

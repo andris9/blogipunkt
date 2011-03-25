@@ -226,9 +226,26 @@ class Post{
         $post["points"] = 45000 * log10(max($post["votes"],1)) + $y * $timeDiff;
     }
 
-    public static function getList($start=0, $limit=20){
+
+    /**
+     * Blog.getList([$start=0][, $limit=20][, $lang]) -> Array
+     * - $start (Number): millisest kirjest alustada
+     * - $limit (Number): mitu kirjet maksimaalselt lugeda
+     * - $lang (String): mis keeles peab blogi olema (n: "et")
+     *
+     * Laeb andmebaasist $limit hulga postitusi, järjestatult uuemad eespool
+     **/
+    public static function getList($start=0, $limit=20, $lang=false){
+
         $data = array();
-    	$sql = "SELECT posts.*, blogs.title AS blogtitle, blogs.url AS blogurl FROM posts LEFT JOIN blogs ON posts.blog=blogs.id WHERE blogs.disabled='N' ORDER BY id DESC LIMIT %s, %s";
+
+        $selectors = array(1); // vaikimisi tingimus on 1, mis on alati tõene
+        $selectors[]= "blogs.disabled='N'";
+        if($lang){
+        	$selectors[]= sprintf("blogs.lang='%s'", mysql_real_escape_string($lang));
+        }
+
+    	$sql = "SELECT posts.*, blogs.title AS blogtitle, blogs.url AS blogurl FROM posts LEFT JOIN blogs ON posts.blog=blogs.id WHERE ".join(" AND ", $selectors)." ORDER BY id DESC LIMIT %s, %s";
         $result = mysql_query(sprintf($sql, intval($start), intval($limit)));
         while($row = mysql_fetch_array($result)){
             $post = self::deserialize($row);
