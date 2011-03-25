@@ -1,6 +1,6 @@
 # Blogipass
 
-**Blogipass** on projekt blogikataloogi loomiseks. Hetkel on olemas vaid back-end (blogide lisamise API, postituste korjamine jne) ning lihtne demo front.
+**Blogipass** on projekt blogikataloogi loomiseks. Hetkel on olemas enamvähem valmis back-end (blogide lisamise API, postituste korjamine jne) ning lihtne demo front.
 
 ## Install
 
