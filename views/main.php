@@ -41,13 +41,9 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
 
     <div id="header">
         <div style="float: right;">
-            <?php if($_GET["page"]!="addBlog"):?>
-                <a href="/node/addBlog">Lisa blogi</a>
-            <?php else: ?>
-                Lisa blogi
-            <?php endif;?>
+            <a href="/node/addBlog">Lisa blogi</a>
         </div>
-        <h1><a href="/">Blogipang</a></h1>
+        <h1><a href="/">Blogipunkt</a></h1>
     </div>
 
     <div id="body">
