@@ -1,17 +1,7 @@
 -- phpMyAdmin SQL Dump
--- version 2.11.9.5
 -- http://www.phpmyadmin.net
---
--- Masin: digituvastus.org
--- Tegemisaeg: 23.03.2011 kell 15:11:46
--- Serveri versioon: 5.1.45
--- PHP versioon: 5.2.10
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
---
--- Andmebaas: `vhost16899s1`
---
 
 -- --------------------------------------------------------
 

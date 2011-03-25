@@ -228,8 +228,8 @@ class Post{
 
     public static function getList($start=0, $limit=20){
         $data = array();
-    	$sql = "SELECT posts.*, blogs.title AS blogtitle, blogs.url AS blogurl FROM posts LEFT JOIN blogs ON posts.blog=blogs.id WHERE blogs.disabled='N' AND blogs.lang='%s' ORDER BY id DESC LIMIT %s, %s";
-        $result = mysql_query(sprintf($sql, "et", intval($start), intval($limit)));
+    	$sql = "SELECT posts.*, blogs.title AS blogtitle, blogs.url AS blogurl FROM posts LEFT JOIN blogs ON posts.blog=blogs.id WHERE blogs.disabled='N' ORDER BY id DESC LIMIT %s, %s";
+        $result = mysql_query(sprintf($sql, intval($start), intval($limit)));
         while($row = mysql_fetch_array($result)){
             $post = self::deserialize($row);
             $post["blogtitle"] = $row["blogtitle"];

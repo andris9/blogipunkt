@@ -7,7 +7,7 @@
         <div class="post-title">
             <a href="<?php echo htmlspecialchars($post["url"]);?>" class="out id:<?php echo $post["id"];?>"><?php echo htmlspecialchars($post["title"]);?></a><br />
             <span class="post-info">
-                <?php echo strftime("%A, %e %b %y %H:%M", strtotime($post["date"]));?>
+                <?php echo strftime("%A, %e %b %Y %H:%M", strtotime($post["date"]));?>
                 blogis
                 <a href="<?php echo htmlspecialchars($post["blogurl"]);?>"><?php echo htmlspecialchars($post["blogtitle"]);?></a>
             </span>
