@@ -89,7 +89,7 @@ kui lihtlabane perioodiline RSS faili allalaadimine serverist. Üldiselt on või
 
 Moodsamad blogimootorid (Blogspot, WordPress) annavad iga postituse juurde ka selle postitusega seotud kommentaaride RSS/Atom voo.
 Selle väärtuse leiab blogi RSS/Atom voost postituse andmete juurest. Blogspot kasutab Atom formaati ning seal tuleb kommentaaride
-voo aadressi otsida elemendist *<link>* (elemendi nimeruumiks on standardne *"http://www.w3.org/2005/Atom"*).
+voo aadressi otsida elemendist *link* (elemendi nimeruumiks on standardne *"http://www.w3.org/2005/Atom"*).
 
     <link rel="replies" type="application/atom+xml" href="feed_url"/>
 
