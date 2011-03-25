@@ -1,4 +1,5 @@
-var AddForm = {
+
+KREATA.AddForm = {
 
     data: {},
 
@@ -445,7 +446,6 @@ var AddForm = {
         }).bind(this));
     }
 
-
 }
 
-$(document).observe("dom:loaded",AddForm.initPage.bind(AddForm));
+$(document).observe("dom:loaded",KREATA.AddForm.initPage.bind(KREATA.AddForm));
