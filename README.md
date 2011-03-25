@@ -26,4 +26,14 @@ andmemaht on piiratud ja kataloogis on vaid moodsamad blogid, võib selle väja 
   * **curl**
   * **DOM** moodul (PHP)
 
-Näiteks [Zone.ee](http://www.zone.ee) ja [Veebimajutus.ee](http://www.veebimajutus.ee) virtuaalserverites on tingimused täidetud out of the box. 
+Näiteks [Zone.ee](http://www.zone.ee) ja [Veebimajutus.ee](http://www.veebimajutus.ee) virtuaalserverites on tingimused täidetud out of the box.
+
+### Litsents
+
+Antud projekt on välja antud oluliste piiranguteta [MIT](blob/master/LICENSE) vabavara litsensiga.
+
+Projekt kasutab ka mitmeid teistsuguse litsentsiga komponente:
+
+  * [Circular Icon Set](http://prothemedesign.com/circular-icons/) ikoonid, mis on tasuta kasutamiseks
+  * [SimplePie](http://simplepie.org/) RSS voogude töötleja, oluliste piiranguteta [BSD](http://www.opensource.org/licenses/bsd-license.php) vabavara litsents
+  * [pubsubhubbub-php](http://code.google.com/p/pubsubhubbub-php/) PubSubHubbub klient, oluliste piiranguteta [Apache License 2.0](http://www.opensource.org/licenses/apache2.0) vabavara litsents
