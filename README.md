@@ -2,6 +2,8 @@
 
 **Blogipunkt** on projekt blogikataloogi loomiseks. Hetkel on olemas enamvähem valmis back-end (blogide lisamise API, postituste korjamine jne) ning lihtne demo front.
 
+Blogipunkt kasutab **PubSubHubbub** tehnoloogiat, mis tähendab, et toetatud blogidest (peaaegu kõik) jõuavad uued postitused lehele **koheselt**!
+
 ## Install
 
   * Lae Blogipunkti failid alla [siit](https://github.com/andris9/blogipunkt/zipball/master)
