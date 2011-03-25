@@ -51,7 +51,7 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
     </div>
 
     <div id="footer">
-        &copy; 2011 kreata.ee
+        &copy; 2011 kreata.ee. Blogipunkt on Open Source, (BSD litsents) ning allalaetav <a href="https://github.com/andris9/blogipunkt">siit</a>.
     </div>
 </div>
 
