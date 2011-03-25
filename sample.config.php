@@ -1,10 +1,13 @@
 <?php
 
+// muuta on vaja kirjeid, mille taga on märkus MUUDA SEDA, muude muutmine
+// ei ole otseselt vajalik
+
 //Andmebaasi konstandid
-define ("MYSQL_SERVER_NAME", "localhost"); 
-define ("MYSQL_SERVER_USER", "db_username"); 
-define ("MYSQL_SERVER_PASS", "db_password"); 
-define ("MYSQL_SERVER_BASE", "db_base"); 
+define ("MYSQL_SERVER_NAME", "localhost");    // <-- MUUDA SEDA
+define ("MYSQL_SERVER_USER", "db_username");  // <-- MUUDA SEDA
+define ("MYSQL_SERVER_PASS", "db_password");  // <-- MUUDA SEDA
+define ("MYSQL_SERVER_BASE", "db_base");      // <-- MUUDA SEDA
 
 //Andmebaasiga ühendamine
 $dbconnect=mysql_connect(MYSQL_SERVER_NAME,MYSQL_SERVER_USER,MYSQL_SERVER_PASS) or die("1:".mysql_error()); 
@@ -19,12 +22,15 @@ setlocale(LC_ALL,'et_EE.UTF-8');
 // Google API Key
 // genereeri aadressilt http://code.google.com/intl/et-EE/apis/loader/signup.html
 // vajalik blogide keele määramiseks
-define("GOOGLE_API_KEY", "secret_api_key");
+define("GOOGLE_API_KEY", "secret_api_key"); // <-- MUUDA SEDA
 
-// user agent string for the bot
+// Roboti identifikaator
 define("BOT_USERAGENT","MyBlogBot/1.0 (+{$_SERVER["HTTP_HOST"]})");
-define("PUBSUB_VERIFY_TOKEN","secret_token");
-define("PUBSUB_CALLBACK_URL","http://".$_SERVER["HTTP_HOST"]."/pubsub");
+
+// PubSubHubbub
+// verify token on suvaline unikaalne string
+define("PUBSUB_VERIFY_TOKEN","secret_token"); // <-- MUUDA SEDA
+define("PUBSUB_CALLBACK_URL","http://".$_SERVER["HTTP_HOST"]."/pubsub/client");
 
 // Listid
 
@@ -39,3 +45,8 @@ $GLOBALS["IGNORE_QUERY_PARAMS"] = array(
 $GLOBALS["IGNORE_FILENAMES"] = array(
     "index.php", "index.htm", "index.html"
 );
+
+// Muu
+
+// Mitu kategooriat võib korraga blogil olla
+define("BLOG_MAX_CATEGORIES", 4);
