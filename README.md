@@ -51,7 +51,7 @@ Näiteks [Zone.ee](http://www.zone.ee) ja [Veebimajutus.ee](http://www.veebimaju
 
 ## Litsents
 
-Antud projekt on välja antud oluliste piiranguteta [MIT](blob/master/LICENSE) vabavara litsensiga.
+Antud projekt on välja antud oluliste piiranguteta [MIT](/andris9/blogipunkt/blob/master/README.md) vabavara litsensiga.
 
 Projekt kasutab ka mitmeid teistsuguse litsentsiga komponente:
 
