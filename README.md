@@ -8,6 +8,10 @@ Blogipunkt kasutab **PubSubHubbub** tehnoloogiat, mis tähendab, et toetatud blo
 
 Demosait asub aadressil [pang.digituvastus.org](http://pang.digituvastus.org) kuid see ei pruugi alati parasjagu töötada.
 
+## Tahad kaasa lüüa?
+
+Igaüks võib Blogipunkti arendamises kaasa lüüa. Bugfixe jms. väiksemat saab teha omal algatusel (tee repost *fork*, paranda viga ja saada mulle *pull request*), suuremate plaanide korral võta ühendust [andris@kreata.ee](mailto:andris@kreata.ee). Arvestada tuleb vaid, et kõik mida teed, läheb MIT litsentsi alla.
+
 ## Install
 
   * Lae Blogipunkti failid alla [siit](https://github.com/andris9/blogipunkt/zipball/master)
