@@ -5,19 +5,19 @@ require_once("includes/tools.php");
 require_once("includes/blog.php");
 require_once("includes/post.php");
 
-$title = "Plogipang";
+$title = "";
 $page = false;
 $js = array();
 
 if(!isset($_GET["page"])){
     // esileht
-    $title = "Plogipang &raquo; Esileht";
+    $title = "Esileht";
     $page = "front";
 }else{
     // ruuter
     switch($_GET["page"]){
         case "addBlog":
-            $title = "Plogipang &raquo; Lisa uus blogi";
+            $title = "Lisa uus blogi";
             $page = "add_blog";
             $js[] = "/static/addblog.js";
             break;

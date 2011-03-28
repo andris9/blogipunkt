@@ -15,23 +15,23 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
 -->
 
   <meta charset="utf-8" />
-  <title><? echo $title?$title:"Ploginator"; ?></title>
+  <title><?php echo $title?$title." &laquo; ":""; ?><?php echo SITE_TITLE; ?></title>
 
   <!-- CSS -->
   <link href="/static/main.css" type="text/css" rel="stylesheet"/>
   <?php if($css):?>
-    <? foreach($css as $file):?>
+    <?php foreach($css as $file):?>
         <link href="<?php echo $file;?>" type="text/css" rel="stylesheet"/>
-    <? endforeach;?>
+    <?php endforeach;?>
   <?php endif; ?>
 
   <!-- JavaScript -->
   <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js" type="text/javascript"></script>
   <script src="/static/main.js" type="text/javascript"></script>
   <?php if($js):?>
-    <? foreach($js as $file):?>
+    <?php foreach($js as $file):?>
         <script src="<?php echo $file;?>" type="text/javascript"></script>
-    <? endforeach;?>
+    <?php endforeach;?>
   <?php endif; ?>
 
 </head>
@@ -43,7 +43,7 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
         <div style="float: right;">
             <a href="/node/addBlog">Lisa blogi</a>
         </div>
-        <h1><a href="/">Blogipunkt</a></h1>
+        <h1><a href="/"><?php echo SITE_TITLE; ?></a></h1>
     </div>
 
     <div id="body">
@@ -51,7 +51,7 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
     </div>
 
     <div id="footer">
-        &copy; 2011 kreata.ee. Blogipunkt on Open Source, (BSD litsents) ning allalaetav <a href="https://github.com/andris9/blogipunkt">siit</a>.
+        &copy; 2011 kreata.ee. <?php echo SITE_TITLE; ?> on Open Source, (<a href="https://github.com/andris9/blogipunkt/blob/master/LICENSE">MIT litsents</a>) ning allalaetav <a href="https://github.com/andris9/blogipunkt">siit</a>.
     </div>
 </div>
 

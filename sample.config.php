@@ -19,6 +19,9 @@ mb_internal_encoding("UTF-8");
 mb_regex_encoding("UTF-8");
 setlocale(LC_ALL,'et_EE.UTF-8');
 
+// Saidi pealkiri
+define("SITE_TITLE", "Blogipunkt"); // <-- MUUDA SEDA
+
 // Google API Key
 // genereeri aadressilt http://code.google.com/intl/et-EE/apis/loader/signup.html
 // vajalik blogide keele määramiseks
