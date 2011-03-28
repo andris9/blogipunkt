@@ -364,6 +364,7 @@ function template_render($filename, $context = array()){
  * on parameetrina kaasas ka päringu algatanud inimese IP
  **/
 function detectLanguage($text){
+    if(!GOOGLE_API_KEY)return false;
     // Automated querys are not allowed, so any request made needs to be "backed up"
     // by a real user (userip)
     $url = "https://ajax.googleapis.com/ajax/services/language/detect?".

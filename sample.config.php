@@ -25,7 +25,10 @@ define("SITE_TITLE", "Blogipunkt"); // <-- MUUDA SEDA
 // Google API Key
 // genereeri aadressilt http://code.google.com/intl/et-EE/apis/loader/signup.html
 // vajalik blogide keele määramiseks
-define("GOOGLE_API_KEY", "secret_api_key"); // <-- MUUDA SEDA
+define("GOOGLE_API_KEY", ""); // <-- MUUDA SEDA
+
+// Google Analytics identifikaator kujul UA-XXXXX-XX külastuste loendamiseks
+define("GOOGLE_ANALYTICS_ID", "");
 
 // Roboti identifikaator
 define("BOT_USERAGENT","MyBlogBot/1.0 (+{$_SERVER["HTTP_HOST"]})");
