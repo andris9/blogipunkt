@@ -97,4 +97,7 @@ WordPress kasutab RSS formaati ning kuna selles vaikimisi kommentaaride element 
 
     <wfw:commentRss>feed_url</wfw:commentRss>
 
+Lisaks on kasutusel veel mitmed kolmanda osapoole kommentaaride platvorme, mille saab blogiomanik oma blogiga integreerida. Näiteks <a href="http://disqus.com">disqus</a> või <a href="http://www.aboutecho.com/commenting">haloscan/js-kit</a>, mis suudavad samuti kommentaaridest RSS voo välja anda. Probleemiks on aga, et seda RSS aadressi
+ei ole kõige lihtsam tuvastada, kuna selle genereerib vastav JavaScripti teek ja blogi lehele lisatakse link alles peale postituse kuvamist. 
+
 **NB!** Kommentaari RSS/Atom voo faili puhul *If-Modified-Since* ei tööta, kuna reeglina kasutab server selleks väärtuseks viimasena salvestatud postituse aega!
