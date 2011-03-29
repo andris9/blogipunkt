@@ -379,6 +379,16 @@ class Blog{
             return false;
     }
 
+    public static function getRandomList($limit, $lang){
+        $sql = "SELECT * FROM blogs WHERE disabled='N' AND `lang`='%s' ORDER BY RAND() LIMIT 0,%s";
+        $result = mysql_query(sprintf($sql, mysql_real_escape_string($lang), mysql_real_escape_string($limit)));
+        $blogs = array();
+        while($row = mysql_fetch_array($result)){
+            $blogs[] = self::deserialize($row);
+        }
+        return $blogs;
+    }
+
     /**
      * Blog.deserialize([$data]) -> Object
      * - $data (Object): mysql_array objekt blogi andmetega

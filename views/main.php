@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="et" lang="et">
 <head>
 
 <!--
@@ -14,46 +14,61 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
 
 -->
 
-  <meta charset="utf-8" />
-  <title><?php echo $title?$title." &laquo; ":""; ?><?php echo SITE_TITLE; ?></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="eesti blogid, blogid, blog">
+    <title><?php echo $title?$title." &laquo; ":""; ?><?php echo SITE_TITLE; ?></title>
 
-  <!-- CSS -->
-  <link href="/static/main.css" type="text/css" rel="stylesheet"/>
-  <?php if($css):?>
-    <?php foreach($css as $file):?>
-        <link href="<?php echo $file;?>" type="text/css" rel="stylesheet"/>
-    <?php endforeach;?>
-  <?php endif; ?>
+    <!-- CSS -->
+    <link href="/static/main.css" type="text/css" rel="stylesheet"/>
+    <?php if($css):?>
+        <?php foreach($css as $file):?>
+            <link href="<?php echo $file;?>" type="text/css" rel="stylesheet"/>
+        <?php endforeach;?>
+    <?php endif; ?>
 
-  <!-- JavaScript -->
-  <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js" type="text/javascript"></script>
-  <script src="/static/main.js" type="text/javascript"></script>
-  <?php if($js):?>
-    <?php foreach($js as $file):?>
-        <script src="<?php echo $file;?>" type="text/javascript"></script>
-    <?php endforeach;?>
-  <?php endif; ?>
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js" type="text/javascript"></script>
+    <script src="/static/main.js" type="text/javascript"></script>
+    <?php if($js):?>
+        <?php foreach($js as $file):?>
+            <script src="<?php echo $file;?>" type="text/javascript"></script>
+        <?php endforeach;?>
+    <?php endif; ?>
+
 
 </head>
 <body>
 
-<div id="container">
+    <div id="container">
+        <div id="banner">
+            <div id="logo">
+                <a href="/"><img src="/static/blogipunkt.gif" alt="<?php echo SITE_TITLE; ?>"></a>
+                <a href="/node/addBlog"><img class="lisablog" src="/static/lisa.gif"></a>
+            </div>
 
-    <div id="header">
-        <div style="float: right;">
-            <a href="/node/addBlog">Lisa blogi</a>
+            <div id="navcontainer">
+
+                <ul>
+                    <li><a href="#">A-D</a></li>
+                    <li><a href="#">E-I</a></li>
+                    <li><a href="#">J-M</a></li>
+                    <li><a href="#">N-R</a></li>
+                    <li><a href="#">S-Z</a></li>
+                </ul>
+            </div>
+
         </div>
-        <h1><a href="/"><?php echo SITE_TITLE; ?></a></h1>
-    </div>
 
-    <div id="body">
         <?php echo $body?$body:"Not found :/"; ?>
+
+        <div id="footer">
+            <p>
+                Au, kuulsus ja krediit: Koodi eest <a href="http://www.andrisreinman.com/">Andrisele</a> ja kujunduse eest <a href="http://zooda.tr.ee/">Zoodale</a>.
+                <?php echo SITE_TITLE; ?> on avatud lähtekoodiga (<a href="https://github.com/andris9/<?php echo SITE_TITLE; ?>/blob/master/LICENSE">MIT litsents</a>) ning allalaetav <a href="https://github.com/andris9/<?php echo SITE_TITLE; ?>">siit</a>.
+            </p>
+        </div>
     </div>
 
-    <div id="footer">
-        &copy; 2011 kreata.ee. <?php echo SITE_TITLE; ?> on Open Source, (<a href="https://github.com/andris9/blogipunkt/blob/master/LICENSE">MIT litsents</a>) ning allalaetav <a href="https://github.com/andris9/blogipunkt">siit</a>.
-    </div>
-</div>
 
 <?php if(GOOGLE_ANALYTICS_ID):?>
     <script type="text/javascript">
