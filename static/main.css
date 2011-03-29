@@ -1,5 +1,5 @@
 body {
-    background: #FFF;
+    background: #E5E5E5 url(/static/bg.gif) repeat-y top center;
     font-family:verdana; font-size:11px; line-height:160%;
     margin: 0;
     padding: 0;
