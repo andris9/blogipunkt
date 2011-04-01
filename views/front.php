@@ -4,8 +4,8 @@
 
             <h3>Viimased 10 sissekannet Eesti blogides:</h3>
             <font style="padding-left: 10px">
-                <a href="rss.php"><img src="/static/rss.gif" alt="RSS" title="RSS"></a>
-                <a href="/" style="text-decoration: underline;">Üldised</a><br />
+                <a href="rss.php"><img src="<?php echo SITE_URL; ?>static/rss.gif" alt="RSS" title="RSS"></a>
+                <a href="<?php echo SITE_URL; ?>" style="text-decoration: underline;">Üldised</a><br />
                 <br />
             </font>
             <div id="list">
@@ -39,7 +39,7 @@
                 <ul>
                     <?php foreach(Blog::getRandomList(20, "et") as $blog):?>
                     <li>
-                        <a href="<?php echo $blog["feed"]; ?>"><img src="/static/rss.gif" alt="RSS" title="RSS"></a>
+                        <a href="<?php echo $blog["feed"]; ?>"><img src="<?php echo SITE_URL; ?>static/rss.gif" alt="RSS" title="RSS"></a>
                         <span class="hover"><a href="<?php echo $blog["url"]; ?>"><?php echo htmlspecialchars($blog["title"]); ?></a></span>
                     </li>
                     <?php endforeach; ?>

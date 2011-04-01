@@ -19,6 +19,10 @@ mb_internal_encoding("UTF-8");
 mb_regex_encoding("UTF-8");
 setlocale(LC_ALL,'et_EE.UTF-8');
 
+// Saidi kataloogi URL
+// n: "/" või "/kataloog/" vms.
+define("SITE_URL", "/");
+
 // Saidi pealkiri
 define("SITE_TITLE", "Blogipunkt"); // <-- MUUDA SEDA
 
@@ -36,7 +40,7 @@ define("BOT_USERAGENT","MyBlogBot/1.0 (+{$_SERVER["HTTP_HOST"]})");
 // PubSubHubbub
 // verify token on suvaline unikaalne string
 define("PUBSUB_VERIFY_TOKEN","secret_token"); // <-- MUUDA SEDA
-define("PUBSUB_CALLBACK_URL","http://".$_SERVER["HTTP_HOST"]."/pubsub/client");
+define("PUBSUB_CALLBACK_URL","http://".$_SERVER["HTTP_HOST"]. SITE_URL ."pubsub/client");
 
 // Listid
 

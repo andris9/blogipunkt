@@ -1,5 +1,5 @@
 body {
-    background: #E5E5E5 url(/static/bg.gif) repeat-y top center;
+    background: #E5E5E5 url(bg.gif) repeat-y top center;
     font-family:verdana; font-size:11px; line-height:160%;
     margin: 0;
     padding: 0;
@@ -237,13 +237,13 @@ ul {
 }
 
 input.wait{
-    background-image: url(/static/wait-small.gif);
+    background-image: url(wait-small.gif);
     background-position: right center;
     background-repeat: no-repeat;
 }
 
 div.wait{
-    background-image: url(/static/wait-small.gif);
+    background-image: url(wait-small.gif);
     background-position: left center;
     background-repeat: no-repeat;
     padding-left: 18px;
@@ -343,7 +343,7 @@ ul.category-list li label, div.category-list div{
 
 .rss-icon{
     padding-left: 18px;
-    background-image: url(/static/rss.png);
+    background-image: url(rss.png);
     background-repeat: no-repeat;
     background-position: left center;
 }

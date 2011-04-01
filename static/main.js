@@ -33,7 +33,7 @@ var KREATA = {
             id = idval && idval[1] || false,
             url;
         if(id){
-            url = "/ajax/post/upvote?id="+id+"&t="+(+new Date());
+            url = KREATA.BaseDir+"ajax/post/upvote?id="+id+"&t="+(+new Date());
             (new Image()).src = url;
         }
     }

@@ -124,7 +124,7 @@ KREATA.AddForm = {
 
     runStep1: function(){
         this.waitStep1();
-        new Ajax.Request("/ajax/blog/check",{
+        new Ajax.Request(KREATA.BaseDir+"ajax/blog/check",{
             method:"post",
             parameters: {
                 url: this.data.step1.url
@@ -324,7 +324,7 @@ KREATA.AddForm = {
             params.push("categories[]="+encodeURIComponent(cat))
         });
 
-        new Ajax.Request("/ajax/blog/add",{
+        new Ajax.Request(KREATA.BaseDir+"ajax/blog/add",{
             method:"post",
             postBody: params.join("&"),
             onComplete: (function(response){

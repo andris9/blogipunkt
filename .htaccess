@@ -1,6 +1,6 @@
 Options +FollowSymLinks
 RewriteEngine On
-RewriteBase /
+#RewriteBase /
 
 RewriteRule ^(.*/)?\.git/ - [F,L]
 ErrorDocument 403 "Access Forbidden"

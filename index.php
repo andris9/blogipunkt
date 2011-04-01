@@ -19,7 +19,7 @@ if(!isset($_GET["page"])){
         case "addBlog":
             $title = "Lisa uus blogi";
             $page = "add_blog";
-            $js[] = "/static/addblog.js";
+            $js[] = SITE_URL ."static/addblog.js";
             break;
     }
 }

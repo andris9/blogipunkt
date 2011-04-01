@@ -19,7 +19,7 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
     <title><?php echo $title?$title." &laquo; ":""; ?><?php echo SITE_TITLE; ?></title>
 
     <!-- CSS -->
-    <link href="/static/main.css" type="text/css" rel="stylesheet"/>
+    <link href="<?php echo SITE_URL; ?>static/main.css" type="text/css" rel="stylesheet"/>
     <?php if($css):?>
         <?php foreach($css as $file):?>
             <link href="<?php echo $file;?>" type="text/css" rel="stylesheet"/>
@@ -28,7 +28,10 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
 
     <!-- JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js" type="text/javascript"></script>
-    <script src="/static/main.js" type="text/javascript"></script>
+    <script src="<?php echo SITE_URL; ?>static/main.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        KREATA.BaseDir = <?php echo SITE_URL ?>;
+    </script>
     <?php if($js):?>
         <?php foreach($js as $file):?>
             <script src="<?php echo $file;?>" type="text/javascript"></script>
@@ -42,8 +45,8 @@ o888o o888o d888b    `Y8bod8P' `Y888""8o   "888" `Y888""8o Y8P `Y8bod8P' `Y8bod8
     <div id="container">
         <div id="banner">
             <div id="logo">
-                <a href="/"><img src="/static/blogipunkt.gif" alt="<?php echo SITE_TITLE; ?>"></a>
-                <a href="/node/addBlog"><img class="lisablog" src="/static/lisa.gif"></a>
+                <a href="<?php echo SITE_URL; ?>"><img src="<?php echo SITE_URL; ?>static/blogipunkt.gif" alt="<?php echo SITE_TITLE; ?>"></a>
+                <a href="<?php echo SITE_URL; ?>node/addBlog"><img class="lisablog" src="<?php echo SITE_URL; ?>static/lisa.gif"></a>
             </div>
 
             <div id="navcontainer">
