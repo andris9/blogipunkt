@@ -23,6 +23,9 @@ Igaüks võib Blogipunkti arendamises kaasa lüüa. Bugfixe jms. väiksemat saab
   * Lisa uus blogi. Kui nüüd esileht avada, peaks seal olema blogi viimased postitused
   * Sea üles CRON (vaata järgmist punkti), et uueneks PubSubHubbub *lease* ning vanemat tüüpi blogide (ilma PubSubHubbubtoetuseta) postitusi kontrollitaks Weblogs.com listist
 
+**NB!** Alamkataloogis majutamiseks tuleb *config.php* failis muuta konstanti *SITE_URL* väärtust. Juhul kui lehekülg hakkab
+olema aadressil *http://www.example.com/blogindus/* peab konstandi väärtuseks panema */blogindus/* (- nii alguses kui lõpus peab olema slash "/")
+
 ### Cron
 
 Üles tuleb seada järgmised Cron tööd
