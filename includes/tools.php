@@ -57,7 +57,7 @@ function urltrim($url){
         }
     }
 
-    $pathparts = split("/", $urlparts["path"]);
+    $pathparts = explode("/", $urlparts["path"]);
     if(in_array($pathparts[count($pathparts)-1], $GLOBALS["IGNORE_FILENAMES"])){
         array_pop($pathparts);
     }
@@ -223,7 +223,7 @@ function baseUrl($url, $base){
         return build_url($baseparts);
     }
 
-    $baseparts["pathtree"] = array_values(array_filter(split("/",$baseparts["path"])));
+    $baseparts["pathtree"] = array_values(array_filter(explode("/",$baseparts["path"])));
     // remove last element, if has a file extension
     if(count($baseparts["pathtree"])){
         $lastelm = $baseparts["pathtree"][count($baseparts["pathtree"])-1];
@@ -234,7 +234,7 @@ function baseUrl($url, $base){
     }
 
     list($urlparts, $baseparts["query"]) = explode("?",$url,2);
-    $urlparts = array_values(array_filter(split("/",$urlparts)));
+    $urlparts = array_values(array_filter(explode("/",$urlparts)));
 
     $build = $baseparts["pathtree"];
 
@@ -385,7 +385,7 @@ function generateSnippet($text){
     $text = preg_replace("/\s\s*/"," ",$text);
     $text = preg_replace("/<.*?>/","\n",$text);
     $text = preg_replace("/\.\s/",".\n",$text);
-    $lines = split("\n",$text);
+    $lines = explode("\n",$text);
     $text = "";
     while(count($lines)){
     	$text .= array_shift($lines)." ";
