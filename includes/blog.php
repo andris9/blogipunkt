@@ -125,12 +125,6 @@ class Blog{
             throw new Exception('No blog url set');
         }
 
-        include_once(dirname(__FILE__)."/event.php");
-        $ref = array(
-            "blog" => &$blog
-        );
-        Event::fire("blog:presave", $ref);
-
         if(!$blog["id"]){
             $sql = "INSERT INTO blogs (url, feed, hub, title, meta, lang, updated, checked, queued) VALUES('%s','%s','%s','%s','%s','%s',NOW(),'%s','%s')";
         }else{
@@ -236,15 +230,6 @@ class Blog{
             $oldvalues["description"] = $blog["description"];
             $blog["meta"]["description"] = $data["description"];
             $changed = true;
-        }
-
-        if($changed){
-        	include_once(dirname(__FILE__)."/event.php");
-            $ref = array(
-                "blog" => &$blog,
-                "oldvalues" => $oldvalues
-            );
-            Event::fire("blog:changed", $ref);
         }
 
         // kuna kutsutakse alati välja postituste kontrollis, siis tuleb
@@ -379,6 +364,14 @@ class Blog{
             return false;
     }
 
+    /**
+     * Blog.getRandomList($limit, $lang) -> Array
+     * - $limit (Number): Mitu blogi lugeda
+     * - $lang (String): Mis keeles blogid võtta
+     *
+     * Laeb andmebaasist suvalised $limit blogi. Pole väga oluline funktsioon,
+     * sai lisatud vaid selle jaoks, et vana kujundusega saaks suvalisi blogisid kuvada
+     **/
     public static function getRandomList($limit, $lang){
         $sql = "SELECT * FROM blogs WHERE disabled='N' AND `lang`='%s' ORDER BY RAND() LIMIT 0,%s";
         $result = mysql_query(sprintf($sql, mysql_real_escape_string($lang), mysql_real_escape_string($limit)));

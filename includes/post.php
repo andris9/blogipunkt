@@ -102,14 +102,6 @@ class Post{
             "comment_feed" => self::get_comments_feed(&$item)
         );
 
-        include_once(dirname(__FILE__)."/event.php");
-        $ref = array(
-            "post" => &$data,
-            "blog" => &$blog,
-            "item" => &$item
-        );
-        Event::fire("post:presave", $ref);
-
         return self::serialize($data);
     }
 
